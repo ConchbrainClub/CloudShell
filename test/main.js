@@ -1,7 +1,7 @@
 var Docker = require('dockerode');
 
-var docker = new Docker({
-	protocol:'http',
-	host: '127.0.0.1', 
-	port: 3000
+var docker = new Docker();
+
+docker.run('ubuntu', ['bash', '-c', 'uname -a'], process.stdout, function (err, data, container) {
+	  console.log(container);
 });

@@ -76,6 +76,10 @@
     "run": "node ./src/main.js",
     "test": "node ./test/main.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ConchBrainClub/web-terminal"
+  },
   "author": "conchbrainclub",
   "license": "ISC"
 }
