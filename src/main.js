@@ -2,7 +2,7 @@ var http = require("http");
 var ttyd = require("./ttyd");
 
 http.createServer((req,res)=>{
-    ttyd.run(7681,(id)=>{
+    ttyd.run((id)=>{
         if(id){
             res.end(id);
         }
