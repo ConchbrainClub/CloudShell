@@ -8,8 +8,7 @@
   "devDependencies": {},
   "scripts": {
     "restore": "npm install",
-    "run": "node ./src/main.js",
-    "test": "node ./test/main.js"
+    "run": "node ./src/main.js"
   },
   "repository": {
     "type": "git",
