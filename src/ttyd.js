@@ -8,6 +8,11 @@ function container (id,port,endTime){
     this.endTime = endTime;
 }
 
+function showStatus(){
+    console.log("Containers " + containers.length);
+    console.log("UsefulPorts " + usefulPorts.length);
+}
+
 function run(callback){
 
     var port = usefulPorts.shift();
@@ -47,11 +52,6 @@ function kill(containerId,callback){
             });
         }
     });
-}
-
-function showStatus(){
-    console.log("Containers " + containers.length);
-    console.log("UsefulPorts " + usefulPorts.length);
 }
 
 //延长容器声明周期

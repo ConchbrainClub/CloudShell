@@ -51,6 +51,12 @@ http.createServer((req,res)=>{
             ttyd.showStatus();
             break;
 
+        case "/connect":
+            var containerId = url.parse(req.url).query;
+
+            
+            break;
+
         default:
             res.statusCode = 404;
             res.end();
