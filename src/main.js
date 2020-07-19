@@ -7,7 +7,7 @@ http.createServer((req,res)=>{
     var path = url.parse(req.url).pathname;
 
     switch(path){
-        case "/":
+        case "/create":
             ttyd.run((id)=>{
                 if(id){
                     res.end(id);
