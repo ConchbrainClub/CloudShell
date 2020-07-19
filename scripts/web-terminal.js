@@ -1,0 +1,2 @@
+var baseUrl = undefined;
+
