@@ -20,10 +20,13 @@ function run(callback){
 
     var cmd = "docker run --rm -d -p " + port + ":7681/tcp tsl0922/ttyd:latest";
     child_process.exec(cmd,(error,stdout,stderr)=>{
-        if(!error || !stderr){
+        if(!error && !stderr){
             //存储容器id
             stdout = stdout.replace("\n","");
             containers.push(new container(stdout,port,new Date().getTime() + 1000 * 60));
+
+            var config = nginx.generator(containers);
+            nginx.apply(config);
 
             callback(stdout);
         }
@@ -40,11 +43,14 @@ function kill(containerId,callback){
     containers.forEach(container => {
         if(container.id == containerId){
             child_process.exec(cmd,(error,stdout,stderr)=>{
-                if(!error || !stderr){
+                if(!error && !stderr){
                     //容器列表中移除
                     containers.splice(containers.indexOf(container),1);
                     //回收端口
                     usefulPorts.push(container.cport);
+
+                    var config = nginx.generator(containers);
+                    nginx.apply(config);
 
                     callback(stdout);
                 }
