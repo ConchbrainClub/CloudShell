@@ -104,6 +104,9 @@ function init(){
     usefulPorts = new Array();
     containers = new Array();
 
+    //初始化nginx
+    nginx.apply(nginx.generator(containers));
+
     //初始化20个可用端口
     for(var i=7681;i<=7700;i++){
         usefulPorts.push(i);

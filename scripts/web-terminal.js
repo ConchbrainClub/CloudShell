@@ -3,31 +3,41 @@ var containerId = undefined;
 
 function create(){
     if(!containerId){
-        fetch({
-            url: baseUrl + "/create"
+        window.fetch(baseUrl + "/create",{
+            method:"GET"
         }).then((res)=>{
-            containerId = res.text();
-            alert(containerId)
+            res.text().then((text)=>{
+                containerId = text;
+                var url = "http://localhost/" + containerId;
+
+                setTimeout(()=>{
+                    document.querySelector("iframe").src = url;
+                },2000);
+            });
         });
     }
 }
 
 function kill(){
     if(containerId){
-        fetch({
-            url: baseUrl + "/kill?" + containerId
+        fetch(baseUrl + "/kill?" + containerId,{
+            method:"GET"
         }).then((res)=>{
-            alert(res.text());
+            res.text().then((text)=>{
+                alert(text)
+            });
         });
     }
 }
 
 function delay(){
     if(containerId){
-        fetch({
-            url: baseUrl + "/delay?" + containerId
+        fetch(baseUrl + "/delay?" + containerId,{
+            method:"GET"
         }).then((res)=>{
-            alert(res.text());
+            res.text().then((text)=>{
+                alert(text)
+            });
         });
     }
 
@@ -40,5 +50,3 @@ function init(){
     //延迟容器生命周期
     delay();
 }
-
-init();
