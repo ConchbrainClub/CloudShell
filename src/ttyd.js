@@ -1,4 +1,5 @@
 var child_process = require("child_process");
+var nginx = require("./nginx");
 
 var containers,usefulPorts;
 
@@ -21,6 +22,7 @@ function run(callback){
     child_process.exec(cmd,(error,stdout,stderr)=>{
         if(!error || !stderr){
             //存储容器id
+            stdout = stdout.replace("\n","");
             containers.push(new container(stdout,port,new Date().getTime() + 1000 * 60));
 
             callback(stdout);
@@ -36,7 +38,7 @@ function kill(containerId,callback){
     var cmd = "docker rm -f " + containerId;
     
     containers.forEach(container => {
-        if(container.id.includes(containerId)){
+        if(container.id == containerId){
             child_process.exec(cmd,(error,stdout,stderr)=>{
                 if(!error || !stderr){
                     //容器列表中移除
@@ -51,13 +53,16 @@ function kill(containerId,callback){
                 }
             });
         }
+        else{
+            callback(undefined);
+        }
     });
 }
 
 //延长容器声明周期
 function delayedLife(containerId,callback){
     containers.forEach(container => {
-        if(container.id.includes(containerId)){
+        if(container.id == containerId){
             container.endTime = new Date().getTime() + 1000 * 60;
             callback(true);
         }
