@@ -1,7 +1,8 @@
 var child_process = require("child_process");
+var fs = require("fs");
 var nginx = require("./nginx");
 
-var containers,usefulPorts;
+var config,containers,usefulPorts;
 
 function container (id,port,endTime){
     this.id = id;
@@ -23,10 +24,9 @@ function run(callback){
         if(!error && !stderr){
             //存储容器id
             stdout = stdout.replace("\n","");
-            containers.push(new container(stdout,port,new Date().getTime() + 1000 * 60));
-
-            var config = nginx.generator(containers);
-            nginx.apply(config);
+            containers.push(new container(stdout,port,new Date().getTime() + 1000 * 60 * config.delayedTime));
+            //配置反向代理
+            nginx.apply(nginx.generator(containers));
 
             callback(stdout);
         }
@@ -48,9 +48,8 @@ function kill(containerId,callback){
                     containers.splice(containers.indexOf(container),1);
                     //回收端口
                     usefulPorts.push(container.cport);
-
-                    var config = nginx.generator(containers);
-                    nginx.apply(config);
+                    //配置反向代理
+                    nginx.apply(nginx.generator(containers));
 
                     callback(stdout);
                 }
@@ -69,7 +68,7 @@ function kill(containerId,callback){
 function delayedLife(containerId,callback){
     containers.forEach(container => {
         if(container.id == containerId){
-            container.endTime = new Date().getTime() + 1000 * 60;
+            container.endTime = new Date().getTime() + 1000 * 60 * config.delayedTime;
             callback(true);
         }
     });
@@ -95,10 +94,12 @@ function autoRecycling(){
         }
     });
 
-    setTimeout(autoRecycling,1000*10);
+    setTimeout(autoRecycling, 1000 * 60 * config.recyclingTime);
 }
 
 function init(){
+
+    config = JSON.parse(fs.readFileSync("./assets/config.json"));
 
     usefulPorts = new Array();
     containers = new Array();
