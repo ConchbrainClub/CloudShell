@@ -132,7 +132,7 @@ function init(){
     autoRecycling();
 
     module.exports = {
-        run,kill,showStatus,delayedLife
+        run,kill,delayedLife
     }
 }
 

@@ -15,8 +15,6 @@ http.createServer((req,res)=>{
                 else{
                     res.end("error");
                 }
-
-                ttyd.showStatus();
             });
 
             break;
@@ -30,8 +28,6 @@ http.createServer((req,res)=>{
                 else{
                     res.end("kill container defeat");
                 }
-
-                ttyd.showStatus();
             })
 
             break;
@@ -48,7 +44,6 @@ http.createServer((req,res)=>{
                 }
             });
 
-            ttyd.showStatus();
             break;
 
         case "/connect":

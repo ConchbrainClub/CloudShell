@@ -49,4 +49,6 @@ function init(){
     create();
     //延迟容器生命周期
     delay();
+    //离开网页关闭容器
+    window.addEventListener('beforeunload',kill);
 }
