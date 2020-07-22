@@ -2,6 +2,7 @@ var fs = require("fs");
 var child_process = require("child_process");
 
 var config,location;
+var configPath = "/etc/nginx/conf.d/default.conf";
 
 function generator(containers){
 
@@ -23,16 +24,16 @@ function generator(containers){
 
 function apply(newConfig,callback){
 
-    var config = fs.readFileSync("/etc/nginx/sites-enabled/default").toString();
+    var config = fs.readFileSync(configPath).toString();
 
     //保存配置文件
-    fs.writeFileSync("/etc/nginx/sites-enabled/default",newConfig);
+    fs.writeFileSync(configPath,newConfig);
 
     //重启nginx
     child_process.exec("nginx -s reload",(error,stdout,stderr)=>{
         if(error || stderr){
             //重启nginx失败，还原配置文件
-            fs.writeFileSync("/etc/nginx/sites-enabled/default",config);
+            fs.writeFileSync(configPath,config);
             callback(false);
         }
         else{
