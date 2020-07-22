@@ -14,7 +14,8 @@ function create(){
                 });
             }
             else{
-                alert("出错了");
+                alert("出错了,5秒后将重试");
+                setTimeout(create,5000);
             }
         });
     }
