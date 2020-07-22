@@ -24,7 +24,7 @@ function kill(){
             method:"GET"
         }).then((res)=>{
             res.text().then((text)=>{
-                alert(text)
+                console.warn(text)
             });
         });
     }
@@ -36,7 +36,7 @@ function delay(){
             method:"GET"
         }).then((res)=>{
             res.text().then((text)=>{
-                alert(text)
+                console.log(text)
             });
         });
     }

@@ -26,9 +26,15 @@ function run(callback){
             stdout = stdout.replace("\n","");
             containers.push(new container(stdout,port,new Date().getTime() + 1000 * 60 * config.delayedTime));
             //配置反向代理
-            nginx.apply(nginx.generator(containers));
+            nginx.apply(nginx.generator(containers),(flag)=>{
+                if(flag){
+                    callback(stdout);
+                }
+                else{
+                    callback(undefined);
+                }
+            });
 
-            callback(stdout);
         }
         else{
             callback(undefined);
@@ -49,7 +55,14 @@ function kill(containerId,callback){
                     //回收端口
                     usefulPorts.push(container.cport);
                     //配置反向代理
-                    nginx.apply(nginx.generator(containers));
+                    nginx.apply(nginx.generator(containers),(flag)=>{
+                        if(flag){
+                            callback(stdout);
+                        }
+                        else{
+                            callback(undefined);
+                        }
+                    });
 
                     callback(stdout);
                 }
@@ -105,7 +118,11 @@ function init(){
     containers = new Array();
 
     //初始化nginx
-    nginx.apply(nginx.generator(containers));
+    nginx.apply(nginx.generator(containers),(flag)=>{
+        if(flag){
+            console.log("nginx init successful");
+        }
+    });
 
     //初始化20个可用端口
     for(var i=7681;i<=7700;i++){

@@ -21,7 +21,7 @@ function generator(containers){
     return configStr;
 }
 
-function apply(newConfig){
+function apply(newConfig,callback){
 
     var config = fs.readFileSync("/etc/nginx/sites-enabled/default").toString();
 
@@ -33,7 +33,10 @@ function apply(newConfig){
         if(error || stderr){
             //重启nginx失败，还原配置文件
             fs.writeFileSync("/etc/nginx/sites-enabled/default",config);
-            console.log("restart successful");
+            callback(false);
+        }
+        else{
+            callback(true);
         }
     });
 }
