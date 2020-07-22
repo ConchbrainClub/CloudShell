@@ -1,5 +1,6 @@
 var http = require("http");
 var url = require("url");
+var fs = require("fs");
 var ttyd = require("./ttyd");
 
 http.createServer((req,res)=>{
@@ -7,12 +8,22 @@ http.createServer((req,res)=>{
     var path = url.parse(req.url).pathname;
 
     switch(path){
+
+        case "/":
+            fs.createReadStream("./test/index.html").pipe(res);
+            break;
+
+        case "/web-terminal.js":
+            fs.createReadStream("./scripts/web-terminal.js").pipe(res);
+            break;
+
         case "/create":
             ttyd.run((id)=>{
                 if(id){
                     res.end(id);
                 }
                 else{
+                    res.statusCode = 500;
                     res.end("error");
                 }
             });
@@ -26,6 +37,7 @@ http.createServer((req,res)=>{
                     res.end("kill container "+containerId);
                 }
                 else{
+                    res.statusCode = 500;
                     res.end("kill container defeat");
                 }
             })
@@ -40,6 +52,7 @@ http.createServer((req,res)=>{
                     res.end("delay successful");
                 }
                 else{
+                    res.statusCode = 500;
                     res.end("dealy defeat");
                 }
             });

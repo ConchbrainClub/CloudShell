@@ -9,8 +9,7 @@ function create(){
             if(res.status==200){
                 res.text().then((text)=>{
                     containerId = text;
-                    var url = "http://localhost/" + containerId;
-                    tryConnect(url);
+                    tryConnect();
                 });
             }
             else{
@@ -24,14 +23,23 @@ function create(){
     }
 }
 
-function tryConnect(url){
-    var num = Math.round((Math.random()*100000)).toString();
-    var str = prompt("请输入"+num);
-    if(str == num){
-        document.querySelector("iframe").src = url;
+function tryConnect(){
+    if(containerId){
+        var num = Math.round((Math.random()*100000)).toString();
+        var str = prompt("请输入"+num);
+        if(!str || str==""){
+            kill();
+        }
+        else if(str == num){
+            var url = baseUrl + "/" + containerId;
+            document.querySelector("iframe").src = url;
+        }
+        else{
+            setTimeout(tryConnect,1000);
+        }
     }
     else{
-        setTimeout(tryConnect,1000,url);
+        alert("请先创建环境");
     }
 }
 
@@ -41,7 +49,7 @@ function kill(){
             method:"GET"
         }).then((res)=>{
             res.text().then((text)=>{
-                console.warn(text)
+                console.log(text)
             });
         });
     }
@@ -61,6 +69,14 @@ function delay(){
     setTimeout(delay,1000*60);
 }
 
+function fullHeight() {
+    var list = document.getElementsByClassName("fullheight");
+
+    for (var i = 0; i < list.length; i++) {
+        list[i].style.height = window.innerHeight + "px";
+    }
+}
+
 function init(){
     //创建容器
     create();
@@ -68,4 +84,7 @@ function init(){
     delay();
     //离开网页关闭容器
     window.addEventListener('beforeunload',kill);
+    //初始化iframe样式
+    window.onresize = fullHeight;
+    fullHeight();
 }
