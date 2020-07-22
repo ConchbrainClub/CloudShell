@@ -9,10 +9,8 @@ function create(){
             res.text().then((text)=>{
                 containerId = text;
                 var url = "http://localhost/" + containerId;
-
-                setTimeout(()=>{
-                    document.querySelector("iframe").src = url;
-                },2000);
+                
+                document.querySelector("iframe").src = url;
             });
         });
     }

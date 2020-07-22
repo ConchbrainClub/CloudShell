@@ -96,14 +96,7 @@ function autoRecycling(){
                 if(flag){
                     console.log("recycling container " + container.id);
                 }
-                else{
-                    console.log("recycling container defeat");
-                }
-                showStatus();
             });
-        }
-        else{
-            console.log("have no container need recycling");
         }
     });
 
@@ -132,7 +125,7 @@ function init(){
     autoRecycling();
 
     module.exports = {
-        run,kill,delayedLife
+        run,kill,delayedLife,showStatus
     }
 }
 
