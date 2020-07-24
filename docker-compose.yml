@@ -21,7 +21,6 @@ services:
         restart: always
         volumes:
             - server:/etc/nginx
-            - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
     server:
