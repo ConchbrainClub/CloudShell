@@ -4,8 +4,9 @@ var nginx = require("./nginx");
 
 var config,containers,usefulPorts;
 
-function container (id,port,endTime){
+function container (id,containerId,port,endTime){
     this.id = id;
+    this.containerId = containerId;
     this.port = port;
     this.endTime = endTime;
 }
@@ -31,8 +32,10 @@ function create(callback){
     var cmd = "docker run --rm -d -p " + port + ":7681/tcp --name " + id + " tsl0922/ttyd:latest";
     child_process.exec(cmd,(error,stdout,stderr)=>{
         if(!error && !stderr){
-            //存储容器id
-            containers.push(new container(id,port,new Date().getTime() + 1000 * 60 * config.delayedTime));
+
+            //存储容器
+            stdout = stdout.replace("\n","");
+            containers.push(new container(id,stdout,port,new Date().getTime() + 1000 * 60 * config.delayedTime));
             //配置反向代理
             nginx.apply(nginx.generator(containers),(flag)=>{
                 if(flag){
@@ -50,12 +53,13 @@ function create(callback){
     });
 }
 
-function kill(containerId,callback){
+function kill(id,callback){
 
-    var cmd = "docker rm -f " + containerId;
-    
     containers.forEach(container => {
-        if(container.id == containerId){
+        if(container.id == id){
+
+            var cmd = "docker rm -f " + container.containerId;
+
             child_process.exec(cmd,(error,stdout,stderr)=>{
                 if(!error && !stderr){
                     //容器列表中移除
@@ -86,9 +90,9 @@ function kill(containerId,callback){
 }
 
 //延长容器声明周期
-function delayedLife(containerId,callback){
+function delayedLife(id,callback){
     containers.forEach(container => {
-        if(container.id == containerId){
+        if(container.id == id){
             container.endTime = new Date().getTime() + 1000 * 60 * config.delayedTime;
             callback(true);
         }
