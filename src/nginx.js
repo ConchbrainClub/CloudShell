@@ -14,10 +14,13 @@ function generator(containers){
     else{
         var proxyStr = "";
         containers.forEach(container => {
+
+            //native
             proxyStr += location.replace("@path", container.id).replace("@link", "localhost:" + container.port);
             
             //docker
             //proxyStr += location.replace("@path", container.id).replace("@link", container.id + ":7681");
+            
         });
         configStr = config.replace("@location",proxyStr);
     }
