@@ -15,20 +15,28 @@ function showStatus(){
     console.log("UsefulPorts " + usefulPorts.length);
 }
 
+function guid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c) {
+        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+        return v.toString(16);
+    });
+}
+
 function create(callback){
 
     var port = usefulPorts.shift();
 
-    var cmd = "docker run --rm -d -p " + port + ":7681/tcp tsl0922/ttyd:latest";
+    var id = guid();
+    //var cmd = "docker run --rm -d -p " + port + ":7681/tcp --name " + id + " --net web-terminal_default tsl0922/ttyd:latest";
+    var cmd = "docker run --rm -d -p " + port + ":7681/tcp --name " + id + " tsl0922/ttyd:latest";
     child_process.exec(cmd,(error,stdout,stderr)=>{
         if(!error && !stderr){
             //存储容器id
-            stdout = stdout.replace("\n","");
-            containers.push(new container(stdout,port,new Date().getTime() + 1000 * 60 * config.delayedTime));
+            containers.push(new container(id,port,new Date().getTime() + 1000 * 60 * config.delayedTime));
             //配置反向代理
             nginx.apply(nginx.generator(containers),(flag)=>{
                 if(flag){
-                    callback(stdout);
+                    callback(id);
                 }
                 else{
                     callback(undefined);
@@ -114,6 +122,9 @@ function init(){
     nginx.apply(nginx.generator(containers),(flag)=>{
         if(flag){
             console.log("nginx init successful");
+        }
+        else{
+            console.log("nginx init defeat")
         }
     });
 
