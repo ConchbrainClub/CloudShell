@@ -28,8 +28,10 @@ function create(callback){
     var port = usefulPorts.shift();
 
     var id = guid();
-    //var cmd = "docker run --rm -d -p " + port + ":7681/tcp --name " + id + " --net web-terminal_default tsl0922/ttyd:latest";
+
     var cmd = "docker run --rm -d -p " + port + ":7681/tcp --name " + id + " tsl0922/ttyd:latest";
+    //docker
+    //var cmd = "docker run --rm -d --name " + id + " --net web-terminal_default tsl0922/ttyd:latest";
     child_process.exec(cmd,(error,stdout,stderr)=>{
         if(!error && !stderr){
 
