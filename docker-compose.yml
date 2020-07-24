@@ -11,8 +11,8 @@ services:
             - webterminal
         volumes:
             - server:/etc/nginx
-            - ./nginx.conf:/etc/nginx/conf.d/default.conf
-    
+            - ./default.conf:/etc/nginx/conf.d/default.conf
+
     webterminal:
         image: ${DOCKER_REGISTRY-}webterminal
         build:
@@ -24,6 +24,6 @@ services:
             - /usr/bin/docker:/usr/bin/docker
             - /var/run/docker.sock:/var/run/docker.sock
         user: root
-        
+
 volumes:
     server:

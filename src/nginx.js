@@ -44,8 +44,8 @@ function apply(newConfig,callback){
 
 function init(){
 
-    config = fs.readFileSync("./assets/default.conf").toString();
-    location = fs.readFileSync("./assets/location.conf").toString();
+    config = fs.readFileSync("./assets/default.template").toString();
+    location = fs.readFileSync("./assets/location.template").toString();
 
     module.exports = {
         generator,apply
