@@ -18,7 +18,7 @@ http.createServer((req,res)=>{
             break;
 
         case "/create":
-            ttyd.run((id)=>{
+            ttyd.create((id)=>{
                 if(id){
                     res.end(id);
                 }

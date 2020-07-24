@@ -15,7 +15,7 @@ function showStatus(){
     console.log("UsefulPorts " + usefulPorts.length);
 }
 
-function run(callback){
+function create(callback){
 
     var port = usefulPorts.shift();
 
@@ -125,7 +125,7 @@ function init(){
     autoRecycling();
 
     module.exports = {
-        run,kill,delayedLife,showStatus
+        create,kill,delayedLife,showStatus
     }
 }
 
