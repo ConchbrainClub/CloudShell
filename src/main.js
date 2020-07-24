@@ -10,11 +10,11 @@ http.createServer((req,res)=>{
     switch(path){
 
         case "/":
-            fs.createReadStream("./test/index.html").pipe(res);
+            fs.createReadStream("./wwwroot/index.html").pipe(res);
             break;
 
         case "/web-terminal.js":
-            fs.createReadStream("./scripts/web-terminal.js").pipe(res);
+            fs.createReadStream("./wwwroot/web-terminal.js").pipe(res);
             break;
 
         case "/create":
@@ -64,6 +64,6 @@ http.createServer((req,res)=>{
             res.end();
     }
 
-}).listen(80,()=>{
-    console.log("server run at http://localhost");
+}).listen(8080,()=>{
+    console.log("server run at http://localhost:8080");
 });

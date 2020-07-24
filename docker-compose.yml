@@ -2,28 +2,15 @@ version: '3.4'
 
 services:
 
-    reverse-proxy:
-        image: nginx
-        ports:
-            - "80:80"
-            - "443:443"
-        depends_on:
-            - webterminal
-        volumes:
-            - server:/etc/nginx
-            - ./default.conf:/etc/nginx/conf.d/default.conf
-
     webterminal:
         image: ${DOCKER_REGISTRY-}webterminal
+        ports:
+            - "80:80"
         build:
             context: .
             dockerfile: Dockerfile
         restart: always
         volumes:
-            - server:/etc/nginx
             - /usr/bin/docker:/usr/bin/docker
             - /var/run/docker.sock:/var/run/docker.sock
         user: root
-
-volumes:
-    server:

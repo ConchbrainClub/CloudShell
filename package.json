@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "conchbrainclub web terminal",
   "main": "./src/main.js",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {},
   "scripts": {
     "restore": "npm install",

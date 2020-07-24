@@ -2,7 +2,7 @@ var fs = require("fs");
 var child_process = require("child_process");
 
 var config,location;
-var configPath = "/etc/nginx/conf.d/default.conf";
+var configPath = "/etc/nginx/sites-enabled/default";
 
 function generator(containers){
 
@@ -44,8 +44,8 @@ function apply(newConfig,callback){
 
 function init(){
 
-    config = fs.readFileSync("./assets/default.template").toString();
-    location = fs.readFileSync("./assets/location.template").toString();
+    config = fs.readFileSync("./assets/default.conf").toString();
+    location = fs.readFileSync("./assets/location.conf").toString();
 
     module.exports = {
         generator,apply
