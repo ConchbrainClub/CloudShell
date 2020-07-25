@@ -1,9 +1,8 @@
-var baseUrl = "http://localhost";
 var containerId = undefined;
 
 function create(){
     if(!containerId){
-        window.fetch(baseUrl + "/create",{
+        window.fetch("/create",{
             method:"GET"
         }).then((res)=>{
             if(res.status==200){
@@ -31,7 +30,7 @@ function tryConnect(){
             kill();
         }
         else if(str == num){
-            var url = baseUrl + "/" + containerId;
+            var url = "/" + containerId;
             document.querySelector("iframe").src = url;
         }
         else{
@@ -45,7 +44,7 @@ function tryConnect(){
 
 function kill(){
     if(containerId){
-        fetch(baseUrl + "/kill?" + containerId,{
+        fetch("/kill?" + containerId,{
             method:"GET"
         }).then((res)=>{
             res.text().then((text)=>{
@@ -57,7 +56,7 @@ function kill(){
 
 function delay(){
     if(containerId){
-        fetch(baseUrl + "/delay?" + containerId,{
+        fetch("/delay?" + containerId,{
             method:"GET"
         }).then((res)=>{
             res.text().then((text)=>{
