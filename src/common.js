@@ -1,3 +1,4 @@
+var fs = require("fs");
 
 function guid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c) {
@@ -6,10 +7,10 @@ function guid() {
     });
 }
 
-function machineEnv(){
-    
+function inDocker(){
+    return fs.existsSync("./dStart.sh")
 }
 
 module.exports = {
-    guid
+    guid,inDocker
 }

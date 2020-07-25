@@ -1,5 +1,6 @@
 var fs = require("fs");
 var child_process = require("child_process");
+var common = require("./common");
 
 var config,location;
 var configPath = "/etc/nginx/sites-enabled/default";
@@ -15,11 +16,14 @@ function generator(containers){
         var proxyStr = "";
         containers.forEach(container => {
 
-            //native
-            proxyStr += location.replace("@path", container.id).replace("@link", "localhost:" + container.port);
-            
-            //docker
-            //proxyStr += location.replace("@path", container.id).replace("@link", container.id + ":7681");
+            if(common.inDocker()){
+                //docker
+                proxyStr += location.replace("@path", container.id).replace("@link", container.id + ":7681");
+            }
+            else{
+                //native
+                proxyStr += location.replace("@path", container.id).replace("@link", "localhost:" + container.port);
+            }
             
         });
         configStr = config.replace("@location",proxyStr);

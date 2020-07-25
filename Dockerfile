@@ -13,6 +13,6 @@ COPY ["./assets","./assets"]
 COPY ["./src","./src"]
 COPY ["./wwwroot","./wwwroot"]
 COPY ["./package.json","./package.json"]
-COPY ["./start.sh","./start.sh"]
+COPY ["./start.sh","./dStart.sh"]
 
-ENTRYPOINT ["bash", "./start.sh"]
+ENTRYPOINT ["bash", "./dStart.sh"]

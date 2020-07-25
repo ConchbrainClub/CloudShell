@@ -23,12 +23,15 @@ function create(callback){
 
     var id = common.guid();
 
-    //native
-    var cmd = "docker run --rm -d -p " + port + ":7681/tcp --name " + id + " tsl0922/ttyd:latest";
+    if(common.inDocker()){
+        //docker
+        var cmd = "docker run --rm -d --name " + id + " --net web-terminal_default tsl0922/ttyd:latest";
+    }
+    else{
+        //native
+        var cmd = "docker run --rm -d -p " + port + ":7681/tcp --name " + id + " tsl0922/ttyd:latest";
+    }
 
-    //docker
-    //var cmd = "docker run --rm -d --name " + id + " --net web-terminal_default tsl0922/ttyd:latest";
-    
     child_process.exec(cmd,(error,stdout,stderr)=>{
         if(!error && !stderr){
 
