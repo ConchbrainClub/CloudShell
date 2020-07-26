@@ -76,7 +76,7 @@ function fullHeight() {
     }
 }
 
-function init(){
+function createContainer(){
     //创建容器
     create();
     //延迟容器生命周期
