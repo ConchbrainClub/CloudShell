@@ -1,6 +1,0 @@
-Starting web-terminal_webterminal_1 ... 
-[1A[2KStarting web-terminal_webterminal_1 ... [32mdone[0m[1BAttaching to web-terminal_webterminal_1
-[36mwebterminal_1  |[0m  * Starting nginx nginx
-[36mwebterminal_1  |[0m    ...done.
-[36mwebterminal_1  |[0m server run at http://localhost:8080
-[36mwebterminal_1  |[0m nginx init successful
