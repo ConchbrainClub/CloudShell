@@ -1,5 +1,5 @@
 {
-  "name": "web-terminal",
+  "name": "cloudshell",
   "version": "1.0.0",
   "description": "conchbrainclub web terminal",
   "main": "./src/main.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ConchBrainClub/web-terminal"
+    "url": "https://github.com/ConchBrainClub/CloudShell"
   },
   "author": "conchbrainclub",
   "license": "ISC"

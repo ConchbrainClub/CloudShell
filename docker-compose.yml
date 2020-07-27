@@ -2,8 +2,8 @@ version: '3.4'
 
 services:
 
-    webterminal:
-        image: ${DOCKER_REGISTRY-}webterminal
+    cloudshell:
+        image: ${DOCKER_REGISTRY-}cloudshell
         ports:
             - "80:80"
         build:

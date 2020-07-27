@@ -25,7 +25,7 @@ function create(callback){
 
     if(common.inDocker()){
         //docker
-        var cmd = "docker run --rm -d --name " + id + " --net web-terminal_default tsl0922/ttyd:latest";
+        var cmd = "docker run --rm -d --name " + id + " --net cloudshell_default tsl0922/ttyd:latest";
     }
     else{
         //native
