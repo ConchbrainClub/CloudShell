@@ -1,7 +1,7 @@
 {
   "name": "cloudshell",
   "version": "1.0.0",
-  "description": "conchbrainclub web terminal",
+  "description": "conchbrainclub cloud shell",
   "main": "./src/main.js",
   "dependencies": {},
   "devDependencies": {},
