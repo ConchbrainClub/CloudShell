@@ -1,12 +1,12 @@
-FROM centos
+FROM debian
 
 EXPOSE 7681
 
-RUN yum update -y
+RUN apt update
 
-RUN yum upgrade -y
+RUN apt upgrade -y
 
-RUN yum install curl wget vim git tmux -y
+RUN apt install curl wget vim git openssh-client htop tmux -y
 
 WORKDIR /usr/bin
 
