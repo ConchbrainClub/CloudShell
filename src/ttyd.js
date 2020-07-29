@@ -17,7 +17,7 @@ function showStatus(){
     console.log("UsefulPorts " + usefulPorts.length);
 }
 
-function create(callback){
+function create(image,callback){
 
     var port = usefulPorts.shift();
 
@@ -29,7 +29,7 @@ function create(callback){
     }
     else{
         //native
-        var cmd = "docker run --rm -d -p " + port + ":7681/tcp --name " + id + " tsl0922/ttyd:latest";
+        var cmd = "docker run --rm -d -p " + port + ":7681/tcp --name " + id + " cloudshell:" + image;
     }
 
     child_process.exec(cmd,(error,stdout,stderr)=>{

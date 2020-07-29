@@ -18,7 +18,9 @@ http.createServer((req,res)=>{
             break;
 
         case "/create":
-            ttyd.create((id)=>{
+            var image = url.parse(req.url).query;
+
+            ttyd.create(image,(id)=>{
                 if(id){
                     res.end(id);
                 }
