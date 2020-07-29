@@ -1,8 +1,12 @@
-FROM archlinux
+FROM kalilinux/kali-rolling
 
 EXPOSE 7681
 
-RUN pacman -Syu --noconfirm curl wget vim git openssh htop tmux
+RUN apt update
+
+RUN apt upgrade -y
+
+RUN apt install curl wget vim git openssh-client htop tmux -y
 
 WORKDIR /usr/bin
 

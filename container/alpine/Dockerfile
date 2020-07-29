@@ -1,8 +1,12 @@
-FROM archlinux
+FROM alpine
 
 EXPOSE 7681
 
-RUN pacman -Syu --noconfirm curl wget vim git openssh htop tmux
+RUN apk update
+
+RUN apk upgrade
+
+RUN apk add curl wget vim git openssh-client htop tmux
 
 WORKDIR /usr/bin
 
