@@ -68,14 +68,6 @@ function delay(){
     }
 }
 
-function fullHeight() {
-    var list = document.getElementsByClassName("fullheight");
-
-    for (var i = 0; i < list.length; i++) {
-        list[i].style.height = window.innerHeight + "px";
-    }
-}
-
 function createContainer(system){
     //创建容器
     create(system);
@@ -83,7 +75,4 @@ function createContainer(system){
     delay();
     //离开网页关闭容器
     window.addEventListener('beforeunload',kill);
-    //初始化iframe样式
-    window.onresize = fullHeight;
-    fullHeight();
 }

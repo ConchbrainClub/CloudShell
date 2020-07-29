@@ -67,5 +67,5 @@ http.createServer((req,res)=>{
     }
 
 }).listen(8080,()=>{
-    console.log("server run at http://localhost:8080");
+    console.log("server run at http://localhost");
 });
