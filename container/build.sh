@@ -4,3 +4,4 @@ docker build -t cloudshell:debian ./debian
 docker build -t cloudshell:alpine ./alpine
 docker build -t cloudshell:archlinux ./archlinux
 docker build -t cloudshell:kali ./kali
+docker rmi $(docker images -q)
