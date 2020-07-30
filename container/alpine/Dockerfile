@@ -6,7 +6,7 @@ RUN apk update
 
 RUN apk upgrade
 
-RUN apk add curl wget vim git openssh-client htop tmux
+RUN apk add curl wget vim git openssh-client htop tmux bash
 
 WORKDIR /usr/bin
 
