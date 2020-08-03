@@ -2,11 +2,13 @@ FROM centos
 
 EXPOSE 7681
 
-RUN yum update -y
+RUN dnf upgrade -y
 
-RUN yum upgrade -y
+RUN dnf install curl wget vim git openssh mc tmux -y
 
-RUN yum install curl wget vim git tmux -y
+RUN dnf install nodejs npm python3 python3-pip java-11-openjdk -y
+
+RUN dnf install dotnet-sdk-3.1 -y
 
 WORKDIR /usr/bin
 
