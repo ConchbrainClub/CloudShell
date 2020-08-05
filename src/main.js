@@ -1,69 +1,24 @@
 var http = require("http");
 var url = require("url");
 var fs = require("fs");
-var ttyd = require("./ttyd");
+var rotate = require("./rotate");
 
 http.createServer((req,res)=>{
 
     var path = url.parse(req.url).pathname;
 
-    switch(path){
+    var staticFile = __dirname + "/wwwroot" + path;
 
-        case "/":
-            fs.createReadStream("./wwwroot/index.html").pipe(res);
-            break;
-
-        case "/web-terminal.js":
-            fs.createReadStream("./wwwroot/web-terminal.js").pipe(res);
-            break;
-
-        case "/create":
-            var image = url.parse(req.url).query;
-
-            ttyd.create(image,(id)=>{
-                if(id){
-                    res.end(id);
-                }
-                else{
-                    res.statusCode = 500;
-                    res.end("error");
-                }
-            });
-
-            break;
-
-        case "/kill":
-            var containerId = url.parse(req.url).query;
-            ttyd.kill(containerId,(flag)=>{
-                if(flag){
-                    res.end("kill container "+containerId);
-                }
-                else{
-                    res.statusCode = 500;
-                    res.end("kill container defeat");
-                }
-            })
-
-            break;
-
-        case "/delay":
-            var containerId = url.parse(req.url).query;
-
-            ttyd.delayedLife(containerId,(flag)=>{
-                if(flag){
-                    res.end("delay successful");
-                }
-                else{
-                    res.statusCode = 500;
-                    res.end("dealy defeat");
-                }
-            });
-
-            break;
-
-        default:
-            res.statusCode = 404;
-            res.end();
+    if(fs.existsSync(staticFile)){
+        if(fs.lstatSync(staticFile).isFile()){
+            fs.createReadStream(staticFile).pipe(res);
+        }
+        else{
+            rotate(req,res,path);
+        }
+    }
+    else{
+        rotate(req,res,path);
     }
 
 }).listen(8080,()=>{
