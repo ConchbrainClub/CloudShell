@@ -128,5 +128,3 @@ function showRunning(){
     }
     setTimeout(showRunning,2000);
 }
-
-document.onreadystatechange = showRunning;

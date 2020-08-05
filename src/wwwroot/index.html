@@ -18,135 +18,137 @@
 
         <div class="container">
 
-        <div class="jumbotron">
-            <h1 class="display-4">CloudShell</h1>
-            <p class="lead">开箱即用的在线 Linux 环境,支持多种发行版本,内置 curl ssh vim git tmux 等基本工具.</p>
-            <hr class="my-4">
-            <p>目前 Ubuntu 和 CentOS 中集成了
-            <a href="http://nodejs.cn/">Nodejs</a>
-            <a href="https://www.python.org/">Python3</a>
-            <a href="https://dotnet.microsoft.com/">.Net Core</a>
-            <a href="http://openjdk.java.net/">OpenJDK</a>
-            开发环境
-            </p>
-            <a href="https://www.lllxy.net/feedback/" target="blank">遇到问题?</a>
+            <div class="jumbotron">
+                <h1 class="display-4">CloudShell</h1>
+                <p class="lead">开箱即用的在线 Linux 环境,支持多种发行版本,内置 curl ssh vim git tmux 等基本工具.</p>
+                <hr class="my-4">
+                <p>目前 Ubuntu 和 CentOS 中集成了
+                    <a href="http://nodejs.cn/">Nodejs</a>
+                    <a href="https://www.python.org/">Python3</a>
+                    <a href="https://dotnet.microsoft.com/">.Net Core</a>
+                    <a href="http://openjdk.java.net/">OpenJDK</a>
+                    开发环境
+                </p>
+                <a href="https://www.lllxy.net/feedback/" target="blank">遇到问题?</a>
+            </div>
+
+            <div id="running" class="container" hidden>
+                <h1 class="display-4">Runnung</h1>
+                <hr/>
+        
+                <div class="row">
+                    <div class="card text-center" style="width: 100%;">
+                        <div class="card-header">当前环境</div>
+                        <div class="card-body">
+                            <h5 class="card-title" id="containerSystem">system</h5>
+                            <p class="card-text" id="containerId">ID</p>
+                            <a id="showModal" href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#shell">继续使用</a>
+                            <a href="javascript:void(0)" class="btn btn-danger" onclick="kill()">关闭环境</a>
+                        </div>
+                        <div class="card-footer text-muted"id="containerTime">time</div>
+                    </div>
+                </div>
+                
+            </div>
+
+            <div>
+                <h1 class="display-4">System</h1>
+                <hr/>
+        
+                <div class="row">
+
+                <div class="col-md-4">
+                    <div class="card text-white system" onclick="createContainer('ubuntu')" data-toggle="modal" data-target="#shell">
+                        <img src="https://conchbrain.oss-cn-shenzhen.aliyuncs.com/cloudshell/ubuntu.png" class="card-img">
+                    </div>
+                </div>
+        
+                <div class="col-md-4">
+                    <div class="card text-white system" onclick="createContainer('centos')" data-toggle="modal" data-target="#shell">
+                        <img src="https://conchbrain.oss-cn-shenzhen.aliyuncs.com/cloudshell/centos.png" class="card-img">
+                    </div>
+                </div>
+        
+                <div class="col-md-4">
+                    <div class="card text-white system" onclick="createContainer('debian')" data-toggle="modal" data-target="#shell">
+                        <img src="https://conchbrain.oss-cn-shenzhen.aliyuncs.com/cloudshell/debian.png" class="card-img">
+                    </div>
+                </div>
+        
+                <div class="col-md-4">
+                    <div class="card text-white system" onclick="createContainer('kali')" data-toggle="modal" data-target="#shell">
+                        <img src="https://conchbrain.oss-cn-shenzhen.aliyuncs.com/cloudshell/kali.png" class="card-img">
+                    </div>
+                </div>
+        
+                <div class="col-md-4">
+                    <div class="card text-white system" onclick="createContainer('archlinux')" data-toggle="modal" data-target="#shell">
+                        <img src="https://conchbrain.oss-cn-shenzhen.aliyuncs.com/cloudshell/archlinux.png" class="card-img">
+                    </div>
+                </div>
+        
+                <div class="col-md-4">
+                    <div class="card text-white system" onclick="createContainer('alpine')" data-toggle="modal" data-target="#shell">
+                        <img src="https://conchbrain.oss-cn-shenzhen.aliyuncs.com/cloudshell/alpine.png" class="card-img">
+                    </div>
+                </div>
+        
+                <div class="col-md-4">
+                    <div class="card text-white system" onclick="createContainer('fedora')" data-toggle="modal" data-target="#shell">
+                        <img src="https://conchbrain.oss-cn-shenzhen.aliyuncs.com/cloudshell/fedora.png" class="card-img">
+                    </div>
+                </div>
+        
+                <div class="col-md-4">
+                    <div class="card text-white system" onclick="createContainer('opensuse')" data-toggle="modal" data-target="#shell">
+                        <img src="https://conchbrain.oss-cn-shenzhen.aliyuncs.com/cloudshell/opensuse.png" class="card-img">
+                    </div>
+                </div>
+        
+                </div>
+            </div>
+
+            <div class="modal fade" id="shell" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalXlLabel" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                
+                        <div class="modal-header">
+                            <h5 class="modal-title h4" id="exampleModalXlLabel">CloudShell</h5>
+
+                            <ul class="nav justify-content-end">
+                                <li class="nav-item">
+                                    <a id="btn_mini" class="nav-link" href="javascript:void(0)" onclick="reconnect()">重连</a>
+                                </li>
+                                <li class="nav-item" data-dismiss="modal" aria-label="Close">
+                                    <a id="btn_mini" class="nav-link" href="javascript:void(0)">最小</a>
+                                </li>
+                                <li class="nav-item" data-dismiss="modal" aria-label="Close">
+                                    <a id="btn_fullScreen" class="nav-link" href="javascript:void(0)" onclick="fullScreen()">全屏</a>
+                                </li>
+                                <li class="nav-item" data-dismiss="modal" aria-label="Close">
+                                    <a id="btn_close" class="nav-link" href="javascript:void(0)" onclick="kill()">关闭</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="modal-body">
+                            <iframe></iframe>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
         </div>
 
-        <div id="running" class="container" hidden>
-            <h1 class="display-4">Runnung</h1>
-            <hr/>
-    
-            <div class="row">
-            <div class="card text-center" style="width: 100%;">
-                <div class="card-header">当前环境</div>
-                <div class="card-body">
-                <h5 class="card-title" id="containerSystem">system</h5>
-                <p class="card-text" id="containerId">ID</p>
-                <a id="showModal" href="javascript:void(0)" class="btn btn-success" data-toggle="modal" data-target="#shell">继续使用</a>
-                <a href="javascript:void(0)" class="btn btn-danger" onclick="kill()">关闭环境</a>
-                </div>
-                <div class="card-footer text-muted"id="containerTime">time</div>
-            </div>
-            </div>
-            
-        </div>
+        <iframe id="fullScreenFrame" hidden></iframe>
 
-        <div>
-            <h1 class="display-4">System</h1>
-            <hr/>
-    
-            <div class="row">
-
-            <div class="col-md-4">
-                <div class="card text-white system" onclick="createContainer('ubuntu')" data-toggle="modal" data-target="#shell">
-                    <img src="https://conchbrain.oss-cn-shenzhen.aliyuncs.com/cloudshell/ubuntu.png" class="card-img">
-                </div>
-            </div>
-    
-            <div class="col-md-4">
-                <div class="card text-white system" onclick="createContainer('centos')" data-toggle="modal" data-target="#shell">
-                    <img src="https://conchbrain.oss-cn-shenzhen.aliyuncs.com/cloudshell/centos.png" class="card-img">
-                </div>
-            </div>
-    
-            <div class="col-md-4">
-                <div class="card text-white system" onclick="createContainer('debian')" data-toggle="modal" data-target="#shell">
-                    <img src="https://conchbrain.oss-cn-shenzhen.aliyuncs.com/cloudshell/debian.png" class="card-img">
-                </div>
-            </div>
-    
-            <div class="col-md-4">
-                <div class="card text-white system" onclick="createContainer('kali')" data-toggle="modal" data-target="#shell">
-                    <img src="https://conchbrain.oss-cn-shenzhen.aliyuncs.com/cloudshell/kali.png" class="card-img">
-                </div>
-            </div>
-    
-            <div class="col-md-4">
-                <div class="card text-white system" onclick="createContainer('archlinux')" data-toggle="modal" data-target="#shell">
-                    <img src="https://conchbrain.oss-cn-shenzhen.aliyuncs.com/cloudshell/archlinux.png" class="card-img">
-                </div>
-            </div>
-    
-            <div class="col-md-4">
-                <div class="card text-white system" onclick="createContainer('alpine')" data-toggle="modal" data-target="#shell">
-                    <img src="https://conchbrain.oss-cn-shenzhen.aliyuncs.com/cloudshell/alpine.png" class="card-img">
-                </div>
-            </div>
-    
-            <div class="col-md-4">
-                <div class="card text-white system" onclick="createContainer('fedora')" data-toggle="modal" data-target="#shell">
-                    <img src="https://conchbrain.oss-cn-shenzhen.aliyuncs.com/cloudshell/fedora.png" class="card-img">
-                </div>
-            </div>
-    
-            <div class="col-md-4">
-                <div class="card text-white system" onclick="createContainer('opensuse')" data-toggle="modal" data-target="#shell">
-                    <img src="https://conchbrain.oss-cn-shenzhen.aliyuncs.com/cloudshell/opensuse.png" class="card-img">
-                </div>
-            </div>
-    
-            </div>
-        </div>
-
-        <div class="modal fade" id="shell" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalXlLabel" style="display: none;" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-            
-                <div class="modal-header">
-                    <h5 class="modal-title h4" id="exampleModalXlLabel">CloudShell</h5>
-
-                    <ul class="nav justify-content-end">
-                        <li class="nav-item">
-                            <a id="btn_mini" class="nav-link" href="javascript:void(0)" onclick="reconnect()">重连</a>
-                        </li>
-                        <li class="nav-item" data-dismiss="modal" aria-label="Close">
-                            <a id="btn_mini" class="nav-link" href="javascript:void(0)">最小</a>
-                        </li>
-                        <li class="nav-item" data-dismiss="modal" aria-label="Close">
-                            <a id="btn_fullScreen" class="nav-link" href="javascript:void(0)" onclick="fullScreen()">全屏</a>
-                        </li>
-                        <li class="nav-item" data-dismiss="modal" aria-label="Close">
-                            <a id="btn_close" class="nav-link" href="javascript:void(0)" onclick="kill()">关闭</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="modal-body">
-                    <iframe></iframe>
-                </div>
-
-                </div>
-            </div>
-        </div>
-
-        </div>
-
+        <div class="exitFullScreen" onclick="exitFullScreen()" hidden>
+        <button class="btn btn-danger">退出全屏</button>
     </div>
 
-    <iframe id="fullScreenFrame" hidden></iframe>
-
-    <div class="exitFullScreen" onclick="exitFullScreen()" hidden>
-    <button class="btn btn-danger">退出全屏</button>
-    </div>
+    <script>showRunning()</script>
 </body>
 </html>
