@@ -11,7 +11,6 @@ RUN apt install nginx -y
 
 COPY ["./assets","./assets"]
 COPY ["./src","./src"]
-COPY ["./wwwroot","./wwwroot"]
 COPY ["./package.json","./package.json"]
 COPY ["./start.sh","./dStart.sh"]
 
