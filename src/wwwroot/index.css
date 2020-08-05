@@ -1,6 +1,9 @@
 #systemList{
-    margin-top: 30px;
     margin-bottom: 30px;
+}
+
+.jumbotron{
+    border-radius: 0;
 }
 
 .system{
