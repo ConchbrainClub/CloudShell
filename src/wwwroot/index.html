@@ -15,9 +15,9 @@
 </head>
 <body>
 
-    <div id="systemList">
-
-        <div class="jumbotron">
+    <!-- header -->
+    <div class="container-fluid" id="header">
+        <div class="container">
             <h1 class="display-4">CloudShell</h1>
             <p class="lead">开箱即用的在线 Linux 环境,支持多种发行版本,内置 curl ssh vim git tmux 等基本工具.</p>
             <hr class="my-4">
@@ -30,6 +30,10 @@
             </p>
             <a href="https://www.lllxy.net/feedback/" target="blank">遇到问题?</a>
         </div>
+    </div>
+
+    <!-- content -->
+    <div id="systemList">
 
         <div class="container">
 
@@ -149,6 +153,20 @@
         <div class="exitFullScreen" onclick="exitFullScreen()" hidden>
         <button class="btn btn-danger">退出全屏</button>
     </div>
+
+    <!--footer-->
+    <footer class="bd-footer text-muted">
+  
+        <div class="container-fluid p-3 p-md-5 text-right">
+  
+            <p>❤ Designed and Developed by
+                <a href="https://www.lllxy.net/" target="blank"><strong>LLLXY</strong></a>
+            </p>
+  
+            <p>© 2020 - ConchbrainClub</p>
+        </div>
+  
+    </footer>
 
     <script>showRunning()</script>
 </body>

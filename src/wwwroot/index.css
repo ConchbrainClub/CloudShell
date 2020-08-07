@@ -1,9 +1,12 @@
-#systemList{
-    margin-bottom: 30px;
+#header{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: whitesmoke;
 }
 
-.jumbotron{
-    border-radius: 0;
+#systemList{
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .system{
@@ -35,4 +38,13 @@
     cursor: pointer;
     visibility: visible;
     color: white;
+}
+
+footer{
+    padding-top: 20px;
+    background-color: whitesmoke;
+}
+
+footer a {
+    color: #616161;
 }
