@@ -6,7 +6,7 @@ RUN apk update
 
 RUN apk upgrade
 
-RUN apk add curl wget vim git openssh-client htop tmux bash
+RUN apk add curl wget vim git openssh-client htop tmux
 
 WORKDIR /usr/bin
 
@@ -18,4 +18,4 @@ RUN chmod +x ./ttyd
 
 WORKDIR /
 
-CMD ["ttyd", "bash"]
+CMD ["ttyd", "sh"]
