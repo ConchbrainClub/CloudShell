@@ -65,7 +65,7 @@ jobs:
         docker tag cloudshell:fedora registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:fedora
         docker tag cloudshell:opensuse registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:opensuse
 
-    - name: Push image to DockerHub
+    - name: Push image to Aliyun
       run: |
         docker login -u=lllxy啊啊啊 -p ${{ secrets.DOCKERHUB_PASSWORD }} registry.cn-shenzhen.aliyuncs.com
         docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:ubuntu
