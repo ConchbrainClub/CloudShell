@@ -1,4 +1,4 @@
-name: container-aliyun
+name: Container-Aliyun
 
 on:
   push:
@@ -29,7 +29,6 @@ jobs:
 
     - name: Tag image for Aliyun
       run: |
-        docker tag cloudshell:latest registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:latest
         docker tag cloudshell:ubuntu registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:ubuntu
         docker tag cloudshell:centos registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:centos
         docker tag cloudshell:debian registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:debian
@@ -42,7 +41,6 @@ jobs:
     - name: Push image to Aliyun
       run: |
         docker login -u=lllxy啊啊啊 -p ${{ secrets.DOCKERHUB_PASSWORD }} registry.cn-shenzhen.aliyuncs.com
-        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:latest
         docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:ubuntu
         docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:centos
         docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:debian
