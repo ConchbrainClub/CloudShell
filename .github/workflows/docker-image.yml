@@ -1,4 +1,4 @@
-name: DockerHub
+name: CloudShell
 
 on:
   push:
@@ -16,42 +16,17 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag cloudshell:latest
-      
-    - name: Build UserContainer
-      run: |
-        cd ./container
-        docker build -t cloudshell:ubuntu ./ubuntu
-        docker build -t cloudshell:centos ./centos
-        docker build -t cloudshell:debian ./debian
-        docker build -t cloudshell:alpine ./alpine
-        docker build -t cloudshell:archlinux ./archlinux
-        docker build -t cloudshell:kali ./kali
-        docker build -t cloudshell:fedora ./fedora
-        docker build -t cloudshell:opensuse ./opensuse
-        cd ..
-
-    - name: Tag image for DockerHub
-      run: |
-        docker tag cloudshell:latest lixinyang/cloudshell:latest
-        docker tag cloudshell:ubuntu lixinyang/cloudshell:ubuntu
-        docker tag cloudshell:centos lixinyang/cloudshell:centos
-        docker tag cloudshell:debian lixinyang/cloudshell:debian
-        docker tag cloudshell:alpine lixinyang/cloudshell:alpine
-        docker tag cloudshell:archlinux lixinyang/cloudshell:archlinux
-        docker tag cloudshell:kali lixinyang/cloudshell:kali
-        docker tag cloudshell:fedora lixinyang/cloudshell:fedora
-        docker tag cloudshell:opensuse lixinyang/cloudshell:opensuse
-
+    
     - name: Push image to DockerHub
       run: |
         docker login -u lixinyang -p ${{ secrets.DOCKERHUB_PASSWORD }}
+        docker tag cloudshell:latest lixinyang/cloudshell:latest
         docker push lixinyang/cloudshell:latest
-        docker push lixinyang/cloudshell:ubuntu
-        docker push lixinyang/cloudshell:centos
-        docker push lixinyang/cloudshell:debian
-        docker push lixinyang/cloudshell:alpine
-        docker push lixinyang/cloudshell:archlinux
-        docker push lixinyang/cloudshell:kali
-        docker push lixinyang/cloudshell:fedora
-        docker push lixinyang/cloudshell:opensuse
+        docker logout
+        
+    - name: Push image to Aliyun
+      run: |
+        docker login -u=lllxy啊啊啊 -p ${{ secrets.DOCKERHUB_PASSWORD }} registry.cn-shenzhen.aliyuncs.com
+        docker tag cloudshell:latest registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:latest
+        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:latest
         docker logout
