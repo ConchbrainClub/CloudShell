@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: DockerHub
 
 on:
   push:
@@ -54,30 +54,4 @@ jobs:
         docker push lixinyang/cloudshell:kali
         docker push lixinyang/cloudshell:fedora
         docker push lixinyang/cloudshell:opensuse
-        docker logout
-
-    - name: Tag image for Aliyun
-      run: |
-        docker tag cloudshell:latest registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:latest
-        docker tag cloudshell:ubuntu registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:ubuntu
-        docker tag cloudshell:centos registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:centos
-        docker tag cloudshell:debian registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:debian
-        docker tag cloudshell:alpine registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:alpine
-        docker tag cloudshell:archlinux registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:archlinux
-        docker tag cloudshell:kali registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:kali
-        docker tag cloudshell:fedora registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:fedora
-        docker tag cloudshell:opensuse registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:opensuse
-
-    - name: Push image to Aliyun
-      run: |
-        docker login -u=lllxy啊啊啊 -p ${{ secrets.DOCKERHUB_PASSWORD }} registry.cn-shenzhen.aliyuncs.com
-        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:latest
-        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:ubuntu
-        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:centos
-        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:debian
-        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:alpine
-        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:archlinux
-        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:kali
-        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:fedora
-        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:opensuse
         docker logout
