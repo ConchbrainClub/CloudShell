@@ -1,4 +1,4 @@
-name: UserContainer-DockerHub
+name: Container-DockerHub
 
 on:
   push:
