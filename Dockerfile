@@ -9,9 +9,10 @@ RUN apt install nodejs -y
 
 RUN apt install nginx -y
 
+RUN touch ./docker
+
 COPY ["./assets","./assets"]
 COPY ["./src","./src"]
 COPY ["./package.json","./package.json"]
-COPY ["./start.sh","./dStart.sh"]
 
-ENTRYPOINT ["bash", "./dStart.sh"]
+ENTRYPOINT ["node", "./src/main.js"]
