@@ -58,7 +58,7 @@ function init(){
     location = fs.readFileSync("./assets/location.conf").toString();
 
     //启动nginx
-    child_process.exec("service nginx start");
+    child_process.execSync("service nginx start");
 
     module.exports = {
         generator,apply
