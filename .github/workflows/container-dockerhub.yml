@@ -17,26 +17,15 @@ jobs:
     - name: Build UserContainer
       run: |
         cd ./container
-        docker build -t cloudshell:ubuntu ./ubuntu
-        docker build -t cloudshell:centos ./centos
-        docker build -t cloudshell:debian ./debian
-        docker build -t cloudshell:alpine ./alpine
-        docker build -t cloudshell:archlinux ./archlinux
-        docker build -t cloudshell:kali ./kali
-        docker build -t cloudshell:fedora ./fedora
-        docker build -t cloudshell:opensuse ./opensuse
+        docker build -t lixinyang/cloudshell:ubuntu ./ubuntu
+        docker build -t lixinyang/cloudshell:centos ./centos
+        docker build -t lixinyang/cloudshell:debian ./debian
+        docker build -t lixinyang/cloudshell:alpine ./alpine
+        docker build -t lixinyang/cloudshell:archlinux ./archlinux
+        docker build -t lixinyang/cloudshell:kali ./kali
+        docker build -t lixinyang/cloudshell:fedora ./fedora
+        docker build -t lixinyang/cloudshell:opensuse ./opensuse
         cd ..
-
-    - name: Tag image for DockerHub
-      run: |
-        docker tag cloudshell:ubuntu lixinyang/cloudshell:ubuntu
-        docker tag cloudshell:centos lixinyang/cloudshell:centos
-        docker tag cloudshell:debian lixinyang/cloudshell:debian
-        docker tag cloudshell:alpine lixinyang/cloudshell:alpine
-        docker tag cloudshell:archlinux lixinyang/cloudshell:archlinux
-        docker tag cloudshell:kali lixinyang/cloudshell:kali
-        docker tag cloudshell:fedora lixinyang/cloudshell:fedora
-        docker tag cloudshell:opensuse lixinyang/cloudshell:opensuse
 
     - name: Push image to DockerHub
       run: |
