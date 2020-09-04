@@ -49,12 +49,18 @@ cd ./container
 bash ./build.sh
 ```
 
+不想重新构建，也可以直接从阿里云拉取用户容器镜像
+
+```shell
+bash ./aliyun.sh
+```
+
 切换回项目根目录
 构建 cloudshell 镜像
 
 ```shell
 cd ..
-docker build . --file Dockerfile --tag cloudshell:latest
+docker build . --file Dockerfile --tag lixinyang/cloudshell:latest
 ```
 
 构建 cloudshell 镜像并启动项目
