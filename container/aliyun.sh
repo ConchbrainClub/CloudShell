@@ -1,4 +1,4 @@
-images=(latest ubuntu centos debian alpine archlinux kali fedora opensuse)
+images=(ubuntu centos debian alpine archlinux kali fedora opensuse)
 
 for((i=0;i<${#images[@]};i++));
 do

@@ -3,7 +3,7 @@ version: '3.4'
 services:
 
     cloudshell:
-        image: ${DOCKER_REGISTRY-}cloudshell
+        image: lixinyang/cloudshell
         ports:
             - "80:80"
         build:
