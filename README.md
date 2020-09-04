@@ -100,26 +100,25 @@ services:
 如果 DockerHub 速度很慢可以从阿里云拉取镜像，**执行以下脚本即可从阿里云拉取镜像**。
 
 ```shell
-shell_images=(latest ubuntu centos debian alpine archlinux kali fedora opensuse)
+images=(latest ubuntu centos debian alpine archlinux kali fedora opensuse)
 
-for((i=0;i<${#array[@]};i++));
+for((i=0;i<${#images[@]};i++));
 do
-	docker pull registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:$(my_array[i])
+    echo docker pull registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:${images[${i}]}
+    docker pull registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:${images[${i}]}
 done
 
-for((i=0;i<${#array[@]};i++));
+for((i=0;i<${#images[@]};i++));
 do
-	if [ $(my_array[i])="latest" ]; then
-		docker tag registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:$(my_array[i]) lixinyang/cloudshell:$(my_array[i])
-	else
-		docker tag registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:$(my_array[i]) cloudshell:$(my_array[i])
-	fi
+    docker tag registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:${images[${i}]} lixinyang/cloudshell:${images[${i}]}
 done
 
-for((i=0;i<${#array[@]};i++));
+for((i=0;i<${#images[@]};i++));
 do
-	docker rmi registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:$(my_array[i])
+    docker rmi registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:${images[${i}]}
 done
+
+echo "Pull image from Aliyun was successful!"
 ```
 
 拉取完成后执行 **docker-compose up** ，接下来访问 http://localhost/ 即可看到界面。
