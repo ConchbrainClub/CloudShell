@@ -14,6 +14,11 @@ RUN apt install curl wget vim git openssh-client mc htop tmux -y
 # install dev env
 RUN apt install nodejs npm python3 python3-pip openjdk-14-jdk -y
 
+# config python
+RUN ln -s /bin/python3 /bin/python
+
+RUN ln -s /bin/pip3 /bin/pip
+
 #install dotnet
 RUN wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 
