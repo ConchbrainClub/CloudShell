@@ -107,23 +107,19 @@ services:
 
 ```shell
 images=(latest ubuntu centos debian alpine archlinux kali fedora opensuse)
-
-for((i=0;i<${#images[@]};i++));
+for item in ${images[@]};
 do
-    echo docker pull registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:${images[${i}]}
-    docker pull registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:${images[${i}]}
+    echo docker pull registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:${item}
+    docker pull registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:${item}
 done
-
-for((i=0;i<${#images[@]};i++));
+for item in ${images[@]};
 do
-    docker tag registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:${images[${i}]} lixinyang/cloudshell:${images[${i}]}
+    docker tag registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:${item} lixinyang/cloudshell:${item}
 done
-
-for((i=0;i<${#images[@]};i++));
+for item in ${images[@]};
 do
-    docker rmi registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:${images[${i}]}
+    docker rmi registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:${item}
 done
-
 echo "Pull image from Aliyun was successful!"
 ```
 
