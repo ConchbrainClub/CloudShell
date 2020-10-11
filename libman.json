@@ -4,11 +4,11 @@
   "libraries": [
     {
       "library": "jquery@3.5.1",
-      "destination": "src\\wwwroot\\lib\\jquery"
+      "destination": "./src/wwwroot/lib/jquery"
     },
     {
       "library": "bootstrap@4.5.2",
-      "destination": "src\\wwwroot\\lib\\bootstrap"
+      "destination": "./src/wwwroot/lib/bootstrap"
     }
   ]
 }
