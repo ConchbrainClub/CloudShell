@@ -11,7 +11,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt install tzdata -y
 # install dev tools
 RUN apt install curl wget vim git openssh-client mc htop tmux make gcc -y
 
-RUN wget https://starship.re/install.sh
+RUN wget https://starship.rs/install.sh
 
 RUN bash ./install.sh -y && rm ./install.sh
 
