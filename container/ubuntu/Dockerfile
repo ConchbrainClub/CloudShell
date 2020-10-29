@@ -11,9 +11,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt install tzdata -y
 # install dev tools
 RUN apt install curl wget vim git openssh-client mc htop tmux make gcc -y
 
-RUN wget https://starship.rs/install.sh
+# install Starship
 
-RUN bash ./install.sh -y && rm ./install.sh
+RUN wget https://starship.rs/install.sh && bash ./install.sh -y && rm ./install.sh
 
 RUN echo "eval $(starship config)" >> /etc/profile
 
