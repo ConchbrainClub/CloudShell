@@ -9,13 +9,7 @@ RUN apt upgrade -y
 RUN DEBIAN_FRONTEND=noninteractive apt install tzdata -y
 
 # install dev tools
-RUN apt install curl wget vim git openssh-client mc htop tmux make gcc -y
-
-# install Starship
-
-RUN wget https://starship.rs/install.sh && bash ./install.sh -y && rm ./install.sh
-
-RUN echo "eval $(starship config)" >> /etc/profile
+RUN apt install curl wget vim git openssh-client mc htop tmux -y
 
 # install dev env
 RUN apt install nodejs npm python3 python3-pip openjdk-14-jdk -y
