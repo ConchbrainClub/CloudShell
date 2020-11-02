@@ -2,7 +2,7 @@ FROM opensuse/leap
 
 EXPOSE 7681
 
-RUN zypper update
+RUN zypper update -y
 
 RUN zypper -n install curl wget vim git openssh htop tmux
 

@@ -1,0 +1,41 @@
+name: Container-DockerHub
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build UserContainer
+      run: |
+        cd ./container
+        docker build -t lixinyang/cloudshell:ubuntu ./ubuntu
+        docker build -t lixinyang/cloudshell:centos ./centos
+        docker build -t lixinyang/cloudshell:debian ./debian
+        docker build -t lixinyang/cloudshell:alpine ./alpine
+        docker build -t lixinyang/cloudshell:archlinux ./archlinux
+        docker build -t lixinyang/cloudshell:kali ./kali
+        docker build -t lixinyang/cloudshell:fedora ./fedora
+        docker build -t lixinyang/cloudshell:opensuse ./opensuse
+        cd ..
+
+    - name: Push image to DockerHub
+      run: |
+        docker login -u lixinyang -p ${{ secrets.DOCKERHUB_PASSWORD }}
+        docker push lixinyang/cloudshell:ubuntu
+        docker push lixinyang/cloudshell:centos
+        docker push lixinyang/cloudshell:debian
+        docker push lixinyang/cloudshell:alpine
+        docker push lixinyang/cloudshell:archlinux
+        docker push lixinyang/cloudshell:kali
+        docker push lixinyang/cloudshell:fedora
+        docker push lixinyang/cloudshell:opensuse
+        docker logout

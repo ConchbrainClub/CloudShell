@@ -1,0 +1,32 @@
+name: CloudShell
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag cloudshell:latest
+    
+    - name: Push image to DockerHub
+      run: |
+        docker login -u lixinyang -p ${{ secrets.DOCKERHUB_PASSWORD }}
+        docker tag cloudshell:latest lixinyang/cloudshell:latest
+        docker push lixinyang/cloudshell:latest
+        docker logout
+        
+    - name: Push image to Aliyun
+      run: |
+        docker login -u=lllxy啊啊啊 -p ${{ secrets.DOCKERHUB_PASSWORD }} registry.cn-shenzhen.aliyuncs.com
+        docker tag cloudshell:latest registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:latest
+        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:latest
+        docker logout

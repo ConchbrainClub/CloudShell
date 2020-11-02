@@ -25,11 +25,11 @@ function create(image,callback){
 
     if(common.inDocker()){
         //docker
-        var cmd = "docker run --rm -d --name " + id + " --net cloudshell_default cloudshell:" + image;
+        var cmd = "docker run --rm -d --name " + id + " --net cloudshell_default lixinyang/cloudshell:" + image;
     }
     else{
         //native
-        var cmd = "docker run --rm -d -p " + port + ":7681/tcp --name " + id + " cloudshell:" + image;
+        var cmd = "docker run --rm -d -p " + port + ":7681/tcp --name " + id + " lixinyang/cloudshell:" + image;
     }
 
     child_process.exec(cmd,(error,stdout,stderr)=>{

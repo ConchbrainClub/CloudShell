@@ -8,7 +8,7 @@ function guid() {
 }
 
 function inDocker(){
-    return fs.existsSync("./dStart.sh")
+    return fs.existsSync("./docker")
 }
 
 module.exports = {
