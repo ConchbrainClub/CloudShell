@@ -12,7 +12,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt install tzdata -y
 RUN apt install curl wget vim git openssh-client mc htop tmux -y
 
 # install dev env
-RUN apt install nodejs npm python3 python3-pip openjdk-14-jdk -y
+RUN apt install nodejs npm python3 python3-pip openjdk-14-jdk mysql-server -y
 
 # config python
 RUN ln -s /bin/python3 /bin/python
