@@ -3,8 +3,7 @@ FROM ubuntu
 EXPOSE 80
 WORKDIR /app
 
-RUN apt update
-RUN apt upgrade -y
+RUN apt update && apt upgrade -y
 RUN apt install nodejs -y
 
 RUN apt install nginx -y

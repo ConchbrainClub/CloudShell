@@ -6,7 +6,7 @@ RUN dnf upgrade -y
 
 RUN dnf install curl wget vim git openssh mc tmux -y
 
-RUN dnf install nodejs npm python3 python3-pip java-11-openjdk -y
+RUN dnf install nodejs npm python3 python3-pip java-11-openjdk mysql-server -y
 
 RUN ln -s /bin/python3 /bin/python
 

@@ -124,6 +124,8 @@ do
     docker rmi registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:${item}
 done
 
+docker images  | grep none | awk '{print $3}' | xargs docker rmi
+
 echo "Pull image from Aliyun was successful!"
 ```
 
