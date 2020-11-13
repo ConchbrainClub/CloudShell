@@ -2,9 +2,7 @@ FROM ubuntu
 
 EXPOSE 7681
 
-RUN apt update
-
-RUN apt upgrade -y
+RUN apt update && apt upgrade -y
 
 RUN DEBIAN_FRONTEND=noninteractive apt install tzdata -y
 
