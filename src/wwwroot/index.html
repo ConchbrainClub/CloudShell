@@ -118,7 +118,12 @@
                     <div class="modal-content">
                 
                         <div class="modal-header">
-                            <h5 class="modal-title h4" id="exampleModalXlLabel">CloudShell</h5>
+                            <h5 class="modal-title h4" id="exampleModalXlLabel">
+                                <div id="loadingStatus" class="spinner-border" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <span>CloudShell</span>
+                            </h5>
 
                             <ul class="nav justify-content-end">
                                 <li class="nav-item">
@@ -130,9 +135,9 @@
                                 <li class="nav-item" data-dismiss="modal" aria-label="Close">
                                     <a id="btn_fullScreen" class="nav-link" href="javascript:void(0)" onclick="fullScreen()">全屏</a>
                                 </li>
-                                <li class="nav-item" data-dismiss="modal" aria-label="Close">
-                                    <a id="btn_close" class="nav-link" href="javascript:void(0)" onclick="kill()">关闭</a>
-                                </li>
+                                <button type="button" class="close" data-dismiss="modal" onclick="kill()" aria-label="关闭">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </ul>
                         </div>
 
