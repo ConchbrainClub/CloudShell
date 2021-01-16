@@ -17,7 +17,7 @@ function create(system){
 
                     //延迟容器生命周期
                     delay();
-                    document.querySelector("#loadingStatus").setAttribute("hidden","");
+                    document.querySelector("#loadingStatus").setAttribute("hidden","hidden");
                     setTimeout(tryConnect,500);
                 });
             }
@@ -33,13 +33,13 @@ function create(system){
 
 function tryConnect(){
     if(container.id){
-        var num = Math.round((Math.random()*100000)).toString();
-        var str = prompt("请输入"+num);
+        let num = Math.round((Math.random()*100000)).toString();
+        let str = prompt("请输入"+num);
         if(!str || str==""){
             kill();
         }
         else if(str == num){
-            var url = "/" + container.id;
+            let url = "/" + container.id;
             document.querySelector("#shell").querySelector("iframe").src = url;
         }
         else{
@@ -60,6 +60,7 @@ function kill(){
                 if(text.includes(container.id)){
                     document.querySelector("#shell").querySelector("iframe").src = "";
                     container.id = undefined;
+                    document.querySelector("#loadingStatus").removeAttribute("hidden");
                 }
                 else{
                     console.log("kill container defeat");
@@ -93,8 +94,8 @@ function createContainer(system){
 function fullScreen(){
     document.querySelector("#btn_mini").click();
     setTimeout(()=>{
-        var iframe = document.querySelector("#shell").querySelector("iframe");
-        var fullScreenFrame = document.querySelector("#fullScreenFrame");
+        let iframe = document.querySelector("#shell").querySelector("iframe");
+        let fullScreenFrame = document.querySelector("#fullScreenFrame");
         fullScreenFrame.src = iframe.src;
         iframe.src = "";
         fullScreenFrame.removeAttribute("hidden");
@@ -103,8 +104,8 @@ function fullScreen(){
 }
 
 function exitFullScreen(){
-    var iframe = document.querySelector("#shell").querySelector("iframe");
-    var fullScreenFrame = document.querySelector("#fullScreenFrame");
+    let iframe = document.querySelector("#shell").querySelector("iframe");
+    let fullScreenFrame = document.querySelector("#fullScreenFrame");
     iframe.src = fullScreenFrame.src;
     fullScreenFrame.src = "";
     fullScreenFrame.setAttribute("hidden","hidden");
@@ -113,7 +114,7 @@ function exitFullScreen(){
 }
 
 function reconnect(){
-    var url = "/" + container.id;
+    let url = "/" + container.id;
     document.querySelector("#shell").querySelector("iframe").src = url;
 }
 
