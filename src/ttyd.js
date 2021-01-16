@@ -67,7 +67,7 @@ function kill(id,callback){
                     //容器列表中移除
                     containers.splice(containers.indexOf(container),1);
                     //回收端口
-                    usefulPorts.push(container.cport);
+                    usefulPorts.push(container.port);
                     //配置反向代理
                     nginx.apply(nginx.generator(containers),(flag)=>{
                         if(flag){
