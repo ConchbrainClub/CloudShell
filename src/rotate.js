@@ -40,7 +40,7 @@ module.exports = (req,res,path)=>{
             break;
 
         case "/delay":
-            var containerId = new URL(req.url, "http://localhost").searchParams.toString().replace("?","");
+            var containerId = new URL(req.url, "http://localhost").search.replace("?","");
 
             ttyd.delayedLife(containerId,(flag)=>{
                 if(flag){

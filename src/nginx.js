@@ -22,11 +22,11 @@ function generator(){
 
             if(common.inDocker()){
                 //docker
-                proxyStr += location.replace("@path", container.id).replace("@link", container.id + ":7681");
+                proxyStr += location.replace("@path", container.id).replace("@link", `${container.id}:7681`);
             }
             else{
                 //native
-                proxyStr += location.replace("@path", container.id).replace("@link", "localhost:" + container.port);
+                proxyStr += location.replace("@path", container.id).replace("@link", `localhost:${container.port}`);
             }
             
         });
@@ -34,7 +34,7 @@ function generator(){
         forwardList.forEach((forward) => {
             if(common.inDocker()){
                 //docker
-                proxyStr += location.replace("@path", "forward/" + forward.id).replace("@link", forward.id + ":" + forward.port);
+                proxyStr += location.replace("@path", `forward/${forward.id}/${forward.port}`).replace("@link", `${forward.id}:${forward.port}`);
             }
         });
 
