@@ -1,9 +1,8 @@
 var child_process = require("child_process");
 var fs = require("fs");
-var nginx = require("./nginx");
 var common = require("./common");
 
-var config,containers,usefulPorts;
+var nginx,config,containers,usefulPorts;
 
 function container (id,containerId,port,endTime){
     this.id = id;
@@ -39,7 +38,7 @@ function create(image,callback){
             stdout = stdout.replace("\n","");
             containers.push(new container(id,stdout,port,new Date().getTime() + 1000 * 60 * config.delayedTime));
             //配置反向代理
-            nginx.apply(nginx.generator(containers),(flag)=>{
+            nginx.apply(nginx.generator(),(flag)=>{
                 if(flag){
                     callback(id);
                 }
@@ -69,7 +68,7 @@ function kill(id,callback){
                     //回收端口
                     usefulPorts.push(container.port);
                     //配置反向代理
-                    nginx.apply(nginx.generator(containers),(flag)=>{
+                    nginx.apply(nginx.generator(),(flag)=>{
                         if(flag){
                             callback(stdout);
                         }
@@ -124,16 +123,6 @@ function init(){
     usefulPorts = new Array();
     containers = new Array();
 
-    //按容器列表初始化nginx
-    nginx.apply(nginx.generator(containers),(flag)=>{
-        if(flag){
-            console.log("nginx init successful");
-        }
-        else{
-            console.log("nginx init defeat")
-        }
-    });
-
     //初始化20个可用端口
     for(var i=7681;i<=7700;i++){
         usefulPorts.push(i);
@@ -142,8 +131,20 @@ function init(){
     autoRecycling();
 
     module.exports = {
-        create,kill,delayedLife,showStatus
+        create,kill,delayedLife,showStatus,containers
     }
+
+    nginx = require("./nginx");
+    
+    //按容器列表初始化nginx
+    nginx.apply(nginx.generator(),(flag)=>{
+        if(flag){
+            console.log("nginx init successful");
+        }
+        else{
+            console.log("nginx init defeat")
+        }
+    });
 }
 
 init();

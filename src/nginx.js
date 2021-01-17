@@ -5,15 +5,19 @@ var common = require("./common");
 var config,location;
 var configPath = "/etc/nginx/sites-enabled/default";
 
-function generator(containers){
+function generator(){
+
+    let containers = require("./ttyd").containers;
+    let forwardList = require("./forward").forwardList;
 
     var configStr = undefined;
 
-    if(containers.length==0){
+    if(containers.length + forwardList.length == 0){
         configStr = config.replace("@location","");
     }
     else{
         var proxyStr = "";
+
         containers.forEach(container => {
 
             if(common.inDocker()){
@@ -26,8 +30,18 @@ function generator(containers){
             }
             
         });
+
+        forwardList.forEach((forward) => {
+            if(common.inDocker()){
+                //docker
+                proxyStr += location.replace("@path", "forward/" + forward.id).replace("@link", forward.id + ":" + forward.port);
+            }
+        });
+
         configStr = config.replace("@location",proxyStr);
     }
+
+    console.log(configStr);
 
     return configStr;
 }

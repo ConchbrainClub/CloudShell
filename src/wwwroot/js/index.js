@@ -118,6 +118,21 @@ function reconnect(){
     document.querySelector("#shell").querySelector("iframe").src = url;
 }
 
+function forwardPort(){
+    let port = document.querySelector("#port").value;
+    if(!isNaN(port)){
+        fetch(`/forward?id=${container.id}&port=${port}`).then((res) => {
+            if(res.status == 200){
+                alert("转发端口成功");
+            }
+            else{
+                alert("转发端口失败");
+            }
+        });
+    }
+    document.querySelector("#port").value = undefined;
+}
+
 function showRunning(){
     if(container.id){
         document.querySelector("#running").removeAttribute("hidden");
