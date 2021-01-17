@@ -1,6 +1,7 @@
 var child_process = require("child_process");
 var fs = require("fs");
 var common = require("./common");
+var forward = require("./forward");
 
 var nginx,config,containers,usefulPorts;
 
@@ -46,7 +47,6 @@ function create(image,callback){
                     callback(undefined);
                 }
             });
-
         }
         else{
             callback(undefined);
@@ -67,6 +67,8 @@ function kill(id,callback){
                     containers.splice(containers.indexOf(container),1);
                     //回收端口
                     usefulPorts.push(container.port);
+                    //移除端口转发
+                    forward.deleteForward(id);
                     //配置反向代理
                     nginx.apply(nginx.generator(),(flag)=>{
                         if(flag){

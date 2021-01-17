@@ -4,6 +4,8 @@ var container = {
     time: undefined
 }
 
+var forward = new Array();
+
 function create(system){
     if(!container.id){
         window.fetch("/create?" + system,{
@@ -124,6 +126,7 @@ function forwardPort(){
         fetch(`/forward?id=${container.id}&port=${port}`).then((res) => {
             if(res.status == 200){
                 alert("转发端口成功");
+                forward.push(port);
             }
             else{
                 alert("转发端口失败");
