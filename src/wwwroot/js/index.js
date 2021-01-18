@@ -3,8 +3,7 @@ var container = {
     system: undefined,
     time: undefined
 }
-
-var forward = new Array();
+var forward = [];
 
 function create(system){
     if(!container.id){
@@ -62,6 +61,7 @@ function kill(){
                 if(text.includes(container.id)){
                     document.querySelector("#shell").querySelector("iframe").src = "";
                     container.id = undefined;
+                    forward = [];
                     document.querySelector("#loadingStatus").removeAttribute("hidden");
                 }
                 else{
@@ -138,10 +138,23 @@ function forwardPort(){
 
 function showRunning(){
     if(container.id){
+        //显示当前运行状态
         document.querySelector("#running").removeAttribute("hidden");
         document.querySelector("#containerSystem").innerText = container.system;
         document.querySelector("#containerId").innerText = container.id;
         document.querySelector("#containerTime").innerText = container.time + " min ago";
+
+        //显示端口转发状态
+        let forwardHtml = "";
+        forward.forEach((port) => {
+            let url = `https://cloudshell.conchbrain.club/forward/${container.id}/${port}`;
+            forwardHtml += `
+                <p class="card-text">
+                    ${port} -> <a href="${url}">${url}</a>
+                </p>
+            `;
+        });
+        document.querySelector("#forward").innerHTML = forwardHtml;
     }
     else{
         document.querySelector("#running").setAttribute("hidden","hidden");
