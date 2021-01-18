@@ -147,10 +147,10 @@ function showRunning(){
         //显示端口转发状态
         let forwardHtml = "";
         forward.forEach((port) => {
-            let url = `https://cloudshell.conchbrain.club/forward/${container.id}/${port}`;
+            let url = `/forward/${container.id}/${port}`;
             forwardHtml += `
                 <p class="card-text">
-                    ${port} -> <a href="${url}">${url}</a>
+                    ${port} -> <a traget="_blank" href="${url}">${url}</a>
                 </p>
             `;
         });
