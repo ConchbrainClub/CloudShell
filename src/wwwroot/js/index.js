@@ -154,7 +154,7 @@ function showRunning(){
                 </p>
             `;
         });
-        document.querySelector("#forward").innerHTML = forwardHtml;
+        document.querySelector("#forwardPorts").innerHTML = forwardHtml;
     }
     else{
         document.querySelector("#running").setAttribute("hidden","hidden");
