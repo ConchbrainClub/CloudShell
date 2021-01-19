@@ -19,8 +19,6 @@ RUN wget https://starship.rs/install.sh && bash ./install.sh -y && rm ./install.
 
 RUN echo 'eval "$(starship init bash)"' >> ~/.bashrc
 
-COPY ./starship.toml ~/.config/starship.toml
-
 # install dev env
 RUN apt install nodejs npm python3 python3-pip openjdk-14-jdk mysql-server -y
 
