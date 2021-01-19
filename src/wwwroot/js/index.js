@@ -150,7 +150,7 @@ function showRunning(){
             let url = `/forward/${container.id}/${port}`;
             forwardHtml += `
                 <p class="card-text">
-                    ${port} -> <a traget="_blank" href="${url}">${url}</a>
+                    ${port} -> <a target="_blank" href="${url}">${url}</a>
                 </p>
             `;
         });
