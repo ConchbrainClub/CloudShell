@@ -1,20 +1,21 @@
 var child_process = require("child_process");
 var fs = require("fs");
+nginx = require("./nginx");
 var common = require("./common");
-var forward = require("./forward");
 
-var nginx,config,containers,usefulPorts;
+var nginx,config,containers,forwardList,usefulPorts;
 
 function container (id,containerId,port,endTime){
     this.id = id;
     this.containerId = containerId;
     this.port = port;
     this.endTime = endTime;
+    this.forward = [];
 }
 
-function showStatus(){
-    console.log("Containers " + containers.length);
-    console.log("UsefulPorts " + usefulPorts.length);
+function forward(id, port) {
+    this.id = id;
+    this.port = port;
 }
 
 function create(image,callback){
@@ -39,7 +40,7 @@ function create(image,callback){
             stdout = stdout.replace("\n","");
             containers.push(new container(id,stdout,port,new Date().getTime() + 1000 * 60 * config.delayedTime));
             //配置反向代理
-            nginx.apply(nginx.generator(),(flag)=>{
+            nginx.apply(nginx.generator(containers,forwardList),(flag)=>{
                 if(flag){
                     callback(id);
                 }
@@ -67,10 +68,10 @@ function kill(id,callback){
                     containers.splice(containers.indexOf(container),1);
                     //回收端口
                     usefulPorts.push(container.port);
-                    //移除端口转发
-                    forward.deleteForward(id);
+                    //删除转发端口
+                    deleteForward(id);
                     //配置反向代理
-                    nginx.apply(nginx.generator(),(flag)=>{
+                    nginx.apply(nginx.generator(containers,forwardList),(flag)=>{
                         if(flag){
                             callback(stdout);
                         }
@@ -118,28 +119,44 @@ function autoRecycling(){
     setTimeout(autoRecycling, 1000 * 60 * config.recyclingTime);
 }
 
+
+function createForward(containerId, port) {
+    forwardList.push(new forward(containerId, port));
+    //配置反向代理
+    nginx.apply(nginx.generator(containers,forwardList),(flag)=>{
+        if(flag){
+            console.log("创建转发成功");
+        }
+    });
+}
+
+function deleteForward(containerId) {
+    let list = new Array();
+
+    for (let i = 0; i < forwardList.length; i++) {
+        if(forwardList[i].id != containerId)
+            list.push(forwardList[i]);
+    }
+
+    forwardList = list;
+}
+
+
 function init(){
 
     config = JSON.parse(fs.readFileSync("./assets/config.json"));
 
     usefulPorts = new Array();
     containers = new Array();
+    forwardList = new Array();
 
     //初始化20个可用端口
     for(var i=7681;i<=7700;i++){
         usefulPorts.push(i);
     }
-
-    autoRecycling();
-
-    module.exports = {
-        create,kill,delayedLife,showStatus,containers
-    }
-
-    nginx = require("./nginx");
     
     //按容器列表初始化nginx
-    nginx.apply(nginx.generator(),(flag)=>{
+    nginx.apply(nginx.generator(containers,forwardList),(flag)=>{
         if(flag){
             console.log("nginx init successful");
         }
@@ -147,6 +164,12 @@ function init(){
             console.log("nginx init defeat")
         }
     });
+
+    autoRecycling();
+
+    module.exports = {
+        create,kill,delayedLife,createForward,containers
+    }
 }
 
 init();

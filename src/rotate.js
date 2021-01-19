@@ -1,6 +1,5 @@
 var fs = require("fs");
 var ttyd = require("./ttyd");
-var forward = require("./forward");
 
 module.exports = (req,res,path)=>{
     
@@ -66,7 +65,7 @@ module.exports = (req,res,path)=>{
 
             ttyd.containers.forEach((container) => {
                 if(container.id == id){
-                    forward.createForward(id,port);
+                    ttyd.createForward(id,port);
                     res.end("createForward successful");
                 }
                 else{
