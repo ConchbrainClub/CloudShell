@@ -1,6 +1,6 @@
-var url = require("url");
 var fs = require("fs");
 var ttyd = require("./ttyd");
+var forward = require("./forward");
 
 module.exports = (req,res,path)=>{
     
@@ -11,7 +11,7 @@ module.exports = (req,res,path)=>{
             break;
 
         case "/create":
-            var image = url.parse(req.url).query;
+            var image = new URL(req.url, "http://localhost").search.replace("?","");
 
             ttyd.create(image,(id)=>{
                 if(id){
@@ -26,7 +26,7 @@ module.exports = (req,res,path)=>{
             break;
 
         case "/kill":
-            var containerId = url.parse(req.url).query;
+            var containerId = new URL(req.url, "http://localhost").search.replace("?","");
             ttyd.kill(containerId,(flag)=>{
                 if(flag){
                     res.end("kill container "+containerId);
@@ -40,7 +40,7 @@ module.exports = (req,res,path)=>{
             break;
 
         case "/delay":
-            var containerId = url.parse(req.url).query;
+            var containerId = new URL(req.url, "http://localhost").search.replace("?","");
 
             ttyd.delayedLife(containerId,(flag)=>{
                 if(flag){
@@ -49,6 +49,29 @@ module.exports = (req,res,path)=>{
                 else{
                     res.statusCode = 500;
                     res.end("dealy defeat");
+                }
+            });
+
+            break;
+
+        case "/forward":
+            let url = new URL(req.url, "http://localhost");
+            let id = url.searchParams.get("id");
+            let port = url.searchParams.get("port");
+
+            if(!id || !port){
+                res.statusCode = 500;
+                res.end("incomplete parameters");
+            }
+
+            ttyd.containers.forEach((container) => {
+                if(container.id == id){
+                    forward.createForward(id,port);
+                    res.end("createForward successful");
+                }
+                else{
+                    res.statusCode = 500;
+                    res.end("container is not exist");
                 }
             });
 

@@ -9,6 +9,10 @@
     margin-bottom: 50px;
 }
 
+#forwardPorts{
+    margin-bottom: 20px;
+}
+
 .system{
     cursor: pointer;
     margin-bottom: 10px;

@@ -3,6 +3,7 @@ var container = {
     system: undefined,
     time: undefined
 }
+var forward = [];
 
 function create(system){
     if(!container.id){
@@ -17,7 +18,7 @@ function create(system){
 
                     //延迟容器生命周期
                     delay();
-                    document.querySelector("#loadingStatus").setAttribute("hidden","");
+                    document.querySelector("#loadingStatus").setAttribute("hidden","hidden");
                     setTimeout(tryConnect,500);
                 });
             }
@@ -33,13 +34,13 @@ function create(system){
 
 function tryConnect(){
     if(container.id){
-        var num = Math.round((Math.random()*100000)).toString();
-        var str = prompt("请输入"+num);
+        let num = Math.round((Math.random()*100000)).toString();
+        let str = prompt("请输入"+num);
         if(!str || str==""){
             kill();
         }
         else if(str == num){
-            var url = "/" + container.id;
+            let url = "/" + container.id;
             document.querySelector("#shell").querySelector("iframe").src = url;
         }
         else{
@@ -60,6 +61,8 @@ function kill(){
                 if(text.includes(container.id)){
                     document.querySelector("#shell").querySelector("iframe").src = "";
                     container.id = undefined;
+                    forward = [];
+                    document.querySelector("#loadingStatus").removeAttribute("hidden");
                 }
                 else{
                     console.log("kill container defeat");
@@ -93,8 +96,8 @@ function createContainer(system){
 function fullScreen(){
     document.querySelector("#btn_mini").click();
     setTimeout(()=>{
-        var iframe = document.querySelector("#shell").querySelector("iframe");
-        var fullScreenFrame = document.querySelector("#fullScreenFrame");
+        let iframe = document.querySelector("#shell").querySelector("iframe");
+        let fullScreenFrame = document.querySelector("#fullScreenFrame");
         fullScreenFrame.src = iframe.src;
         iframe.src = "";
         fullScreenFrame.removeAttribute("hidden");
@@ -103,8 +106,8 @@ function fullScreen(){
 }
 
 function exitFullScreen(){
-    var iframe = document.querySelector("#shell").querySelector("iframe");
-    var fullScreenFrame = document.querySelector("#fullScreenFrame");
+    let iframe = document.querySelector("#shell").querySelector("iframe");
+    let fullScreenFrame = document.querySelector("#fullScreenFrame");
     iframe.src = fullScreenFrame.src;
     fullScreenFrame.src = "";
     fullScreenFrame.setAttribute("hidden","hidden");
@@ -113,16 +116,45 @@ function exitFullScreen(){
 }
 
 function reconnect(){
-    var url = "/" + container.id;
+    let url = "/" + container.id;
     document.querySelector("#shell").querySelector("iframe").src = url;
+}
+
+function forwardPort(){
+    let port = document.querySelector("#port").value;
+    if(!isNaN(port)){
+        fetch(`/forward?id=${container.id}&port=${port}`).then((res) => {
+            if(res.status == 200){
+                alert("转发端口成功");
+                forward.push(port);
+            }
+            else{
+                alert("转发端口失败");
+            }
+        });
+    }
+    document.querySelector("#port").value = undefined;
 }
 
 function showRunning(){
     if(container.id){
+        //显示当前运行状态
         document.querySelector("#running").removeAttribute("hidden");
         document.querySelector("#containerSystem").innerText = container.system;
         document.querySelector("#containerId").innerText = container.id;
         document.querySelector("#containerTime").innerText = container.time + " min ago";
+
+        //显示端口转发状态
+        let forwardHtml = "";
+        forward.forEach((port) => {
+            let url = `/forward/${container.id}/${port}`;
+            forwardHtml += `
+                <p class="card-text">
+                    ${port} -> <a target="_blank" href="${url}">${url}</a>
+                </p>
+            `;
+        });
+        document.querySelector("#forwardPorts").innerHTML = forwardHtml;
     }
     else{
         document.querySelector("#running").setAttribute("hidden","hidden");
