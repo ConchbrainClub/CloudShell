@@ -79,16 +79,11 @@ function kill(id,callback){
                             callback(undefined);
                         }
                     });
-
-                    callback(stdout);
                 }
                 else{
                     callback(undefined);
                 }
             });
-        }
-        else{
-            callback(undefined);
         }
     });
 }
