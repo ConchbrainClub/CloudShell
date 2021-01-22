@@ -5,11 +5,8 @@ var common = require("./common");
 var config,location;
 var configPath = "/etc/nginx/sites-enabled/default";
 
-function generator(){
-
-    let containers = require("./ttyd").containers;
-    let forwardList = require("./forward").forwardList;
-
+function generator(containers,forwardList){
+    
     var configStr = undefined;
 
     if(containers.length + forwardList.length == 0){

@@ -4,15 +4,26 @@ EXPOSE 7681
 
 RUN dnf upgrade -y
 
-RUN dnf install curl wget vim git openssh mc tmux -y
+RUN dnf install curl wget vim git openssh mc tmux gcc make -y
 
+# install spacevim
+RUN curl -sLf https://spacevim.org/cn/install.sh | bash
+
+RUN cd ~/.SpaceVim/bundle/vimproc.vim && make 
+
+#install starship
+RUN wget https://starship.rs/install.sh && bash ./install.sh -y && rm ./install.sh
+
+RUN echo 'eval "$(starship init bash)"' >> ~/.bashrc
+
+# install dev env
 RUN dnf install nodejs npm python3 python3-pip java-11-openjdk mysql-server -y
 
 RUN ln -s /bin/python3 /bin/python
 
 RUN ln -s /bin/pip3 /bin/pip
 
-RUN dnf install dotnet-sdk-3.1 -y
+RUN dnf install dotnet-sdk-5.0 -y
 
 WORKDIR /usr/bin
 
