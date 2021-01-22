@@ -17,7 +17,7 @@ function create(system){
                     container.time = -1;
 
                     //延迟容器生命周期
-                    worker = new Worker("./js/index.js");
+                    worker = new Worker("./js/worker.js");
                     worker.postMessage(container.id);
                     worker.onmessage = () => {
                         container.time++;
