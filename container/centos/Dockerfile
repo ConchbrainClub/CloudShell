@@ -17,7 +17,7 @@ RUN wget https://starship.rs/install.sh && bash ./install.sh -y && rm ./install.
 RUN echo 'eval "$(starship init bash)"' >> ~/.bashrc
 
 # install dev env
-RUN dnf install nodejs npm python3 python3-pip java-11-openjdk mysql-server -y
+RUN dnf install nodejs npm python3 python3-pip php golang java-11-openjdk mysql-server -y
 
 RUN ln -s /bin/python3 /bin/python
 
