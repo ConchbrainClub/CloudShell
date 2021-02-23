@@ -1,6 +1,6 @@
 # CloudShell
 
-CloudShell 是一个开箱即用的在线 Linux 环境，支持八种常用的 Linux 发行版本，内置 curl、ssh、spacevim、starship、git、tmux 等基本工具，同时集成了集成了 Nodejs、Python3、.NET、OpenJDK、PHP、Go  等开发环境。
+CloudShell 是一个开箱即用的在线 Linux 环境，支持八种常用的 Linux 发行版本，内置 curl、ssh、spacevim、starship、git、tmux 等基本工具，同时集成了集成了 Nodejs、Python、.NET、OpenJDK、PHP、Go  等开发环境。
 
 ## 从源码构建项目
 
