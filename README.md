@@ -97,15 +97,7 @@ services:
         user: root
 ```
 
-接下来需要从阿里云拉取镜像，具体可以参考下方，从阿里云拉取镜像。
-
-拉取完成后，执行 docker-compose up 即可，接下来访问 http://localhost/ 即可看到界面。
-
-> 直接执行 docker-compose up 默认会从 DockerHub 拉取镜像
-
-#### 从阿里云拉取镜像
-
-**执行以下脚本即可从阿里云拉取镜像**。
+接下来需要从阿里云拉取镜像，**执行以下脚本即可从阿里云拉取镜像**。
 
 ```shell
 images=(latest ubuntu centos debian alpine archlinux kali fedora opensuse)
