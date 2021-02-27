@@ -75,7 +75,7 @@ docker-compose up
 
 #### 直接在服务器部署
 
-项目镜像已经上传至 DockerHub 和 Aliyun ，可以直接拉取并运行
+容器镜像已经上传至 Aliyun ，可以直接拉取并运行
 
 首先确保你的服务器上安装了 **Docker** 和 **Docker-Compose**
 
@@ -97,13 +97,15 @@ services:
         user: root
 ```
 
-执行 docker-compose up 即可，接下来访问 http://localhost/ 即可看到界面。
+接下来需要从阿里云拉取镜像，具体可以参考下方，从阿里云拉取镜像。
+
+拉取完成后，执行 docker-compose up 即可，接下来访问 http://localhost/ 即可看到界面。
 
 > 直接执行 docker-compose up 默认会从 DockerHub 拉取镜像
 
 #### 从阿里云拉取镜像
 
-如果 DockerHub 速度很慢可以从阿里云拉取镜像，**执行以下脚本即可从阿里云拉取镜像**。
+**执行以下脚本即可从阿里云拉取镜像**。
 
 ```shell
 images=(latest ubuntu centos debian alpine archlinux kali fedora opensuse)
