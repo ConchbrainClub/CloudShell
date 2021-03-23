@@ -4,7 +4,7 @@ CloudShell 是一个开箱即用的在线 Linux 环境，支持八种常用的 L
 
 ## 从源码构建项目
 
-![CloudShell](https://github.com/ConchBrainClub/CloudShell/workflows/CloudShell/badge.svg) ![Container-DockerHub](https://github.com/ConchBrainClub/CloudShell/workflows/Container-DockerHub/badge.svg) ![Container-Aliyun](https://github.com/ConchBrainClub/CloudShell/workflows/Container-Aliyun/badge.svg)
+![CloudShell](https://github.com/ConchBrainClub/CloudShell/workflows/CloudShell/badge.svg)
 
 [![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=conchbrainclub&repo=cloudshell)](https://github.com/conchbrainclub/cloudshell)
 
