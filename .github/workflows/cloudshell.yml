@@ -32,7 +32,7 @@ jobs:
         docker logout
 
   container-dockerhub:
-    need: build
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -64,7 +64,7 @@ jobs:
         docker logout
 
   container-aliyun:
-    need: build
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
