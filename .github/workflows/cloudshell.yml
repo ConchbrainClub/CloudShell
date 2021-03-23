@@ -30,3 +30,67 @@ jobs:
         docker tag cloudshell:latest registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:latest
         docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:latest
         docker logout
+
+  container-dockerhub:
+    need: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build UserContainer
+      run: |
+        cd ./container
+        docker build -t lixinyang/cloudshell:ubuntu ./ubuntu
+        docker build -t lixinyang/cloudshell:centos ./centos
+        docker build -t lixinyang/cloudshell:debian ./debian
+        docker build -t lixinyang/cloudshell:alpine ./alpine
+        docker build -t lixinyang/cloudshell:archlinux ./archlinux
+        docker build -t lixinyang/cloudshell:kali ./kali
+        docker build -t lixinyang/cloudshell:fedora ./fedora
+        docker build -t lixinyang/cloudshell:opensuse ./opensuse
+        cd ..
+
+    - name: Push image to DockerHub
+      run: |
+        docker login -u lixinyang -p ${{ secrets.DOCKERHUB_PASSWORD }}
+        docker push lixinyang/cloudshell:ubuntu
+        docker push lixinyang/cloudshell:centos
+        docker push lixinyang/cloudshell:debian
+        docker push lixinyang/cloudshell:alpine
+        docker push lixinyang/cloudshell:archlinux
+        docker push lixinyang/cloudshell:kali
+        docker push lixinyang/cloudshell:fedora
+        docker push lixinyang/cloudshell:opensuse
+        docker logout
+
+  container-aliyun:
+    need: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build UserContainer
+      run: |
+        cd ./container
+        docker build -t registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:ubuntu ./ubuntu
+        docker build -t registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:centos ./centos
+        docker build -t registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:debian ./debian
+        docker build -t registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:alpine ./alpine
+        docker build -t registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:archlinux ./archlinux
+        docker build -t registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:kali ./kali
+        docker build -t registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:fedora ./fedora
+        docker build -t registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:opensuse ./opensuse
+        cd ..
+
+    - name: Push image to Aliyun
+      run: |
+        docker login -u=lllxy啊啊啊 -p ${{ secrets.DOCKERHUB_PASSWORD }} registry.cn-shenzhen.aliyuncs.com
+        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:ubuntu
+        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:centos
+        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:debian
+        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:alpine
+        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:archlinux
+        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:kali
+        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:fedora
+        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:opensuse
+        docker logout
