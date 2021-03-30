@@ -42,6 +42,7 @@ function tryConnect(){
         let str = prompt("请输入"+num);
         if(!str || str==""){
             kill();
+            $("#shell").modal("toggle");
         }
         else if(str == num){
             let url = "/" + container.id;

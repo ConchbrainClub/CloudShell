@@ -20,7 +20,7 @@ RUN wget https://starship.rs/install.sh && bash ./install.sh -y && rm ./install.
 RUN echo 'eval "$(starship init bash)"' >> ~/.bashrc
 
 # install dev env
-RUN apt install nodejs npm python3 python3-pip openjdk-14-jdk mysql-server -y
+RUN apt install nodejs npm python3 python3-pip php golang openjdk-14-jdk mysql-server -y
 
 # config python
 RUN ln -s /bin/python3 /bin/python
@@ -44,9 +44,9 @@ RUN rm packages-microsoft-prod.deb
 
 WORKDIR /usr/bin
 
-RUN wget https://github.com/tsl0922/ttyd/releases/download/1.6.1/ttyd_linux.x86_64
+RUN wget https://github.com/tsl0922/ttyd/releases/download/1.6.3/ttyd.x86_64
 
-RUN mv ./ttyd_linux.x86_64 ./ttyd
+RUN mv ./ttyd.x86_64 ./ttyd
 
 RUN chmod +x ./ttyd
 

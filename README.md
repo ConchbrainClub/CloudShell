@@ -1,10 +1,10 @@
 # CloudShell
 
-CloudShell 是一个开箱即用的在线 Linux 环境，支持八种常用的 Linux 发行版本，内置 curl、ssh、vim、git、tmux 等基本工具，同时集成了集成了 Nodejs、Python3、.NET Core、OpenJDK 等开发环境。
+CloudShell 是一个开箱即用的在线 Linux 环境，支持八种常用的 Linux 发行版本，内置 curl、ssh、spacevim、starship、git、tmux 等基本工具，同时集成了集成了 Nodejs、Python、.NET、OpenJDK、PHP、Go  等开发环境。
 
 ## 从源码构建项目
 
-![CloudShell](https://github.com/ConchBrainClub/CloudShell/workflows/CloudShell/badge.svg) ![Container-DockerHub](https://github.com/ConchBrainClub/CloudShell/workflows/Container-DockerHub/badge.svg) ![Container-Aliyun](https://github.com/ConchBrainClub/CloudShell/workflows/Container-Aliyun/badge.svg)
+![CloudShell](https://github.com/ConchBrainClub/CloudShell/workflows/CloudShell/badge.svg)
 
 [![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=conchbrainclub&repo=cloudshell)](https://github.com/conchbrainclub/cloudshell)
 
@@ -75,7 +75,7 @@ docker-compose up
 
 #### 直接在服务器部署
 
-项目镜像已经上传至 DockerHub 和 Aliyun ，可以直接拉取并运行
+容器镜像已经上传至 Aliyun ，可以直接拉取并运行
 
 首先确保你的服务器上安装了 **Docker** 和 **Docker-Compose**
 
@@ -97,13 +97,7 @@ services:
         user: root
 ```
 
-执行 docker-compose up 即可，接下来访问 http://localhost/ 即可看到界面。
-
-> 直接执行 docker-compose up 默认会从 DockerHub 拉取镜像
-
-#### 从阿里云拉取镜像
-
-如果 DockerHub 速度很慢可以从阿里云拉取镜像，**执行以下脚本即可从阿里云拉取镜像**。
+接下来需要从阿里云拉取镜像，**执行以下脚本即可从阿里云拉取镜像**。
 
 ```shell
 images=(latest ubuntu centos debian alpine archlinux kali fedora opensuse)
@@ -130,3 +124,5 @@ echo "Pull image from Aliyun was successful!"
 ```
 
 拉取完成后执行 **docker-compose up** ，接下来访问 http://localhost/ 即可看到界面。
+
+端口转发功能见 [《介绍 CloudShell 端口转发功能》](https://www.lllxy.net/Blog/Detail/f5008554-1bdd-44bd-8e8d-2c92040057ec)
