@@ -23,9 +23,9 @@ RUN echo 'eval "$(starship init bash)"' >> ~/.bashrc
 RUN apt install nodejs npm python3 python3-pip php golang openjdk-14-jdk mysql-server -y
 
 # config python
-RUN ln -s /bin/python3 /bin/python
+RUN rm /bin/python && ln -s /bin/python3 /bin/python
 
-RUN ln -s /bin/pip3 /bin/pip
+RUN rm /bin/pip && ln -s /bin/pip3 /bin/pip
 
 #install dotnet
 RUN wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
