@@ -125,4 +125,4 @@ echo "Pull image from Aliyun was successful!"
 
 拉取完成后执行 **docker-compose up** ，接下来访问 http://localhost/ 即可看到界面。
 
-端口转发功能见 [《介绍 CloudShell 端口转发功能》](https://www.lllxy.net/Blog/Detail/f5008554-1bdd-44bd-8e8d-2c92040057ec)
+端口转发功能见 [《介绍 CloudShell 端口转发功能》](https://www.lllxy.net/Blog/Detail/08cfd84f-d1bc-4a17-8d4a-8f5ed773c2b4)
