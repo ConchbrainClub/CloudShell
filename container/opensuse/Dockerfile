@@ -4,7 +4,7 @@ EXPOSE 7681
 
 RUN zypper update -y
 
-RUN zypper -n install fish curl wget vim git openssh htop tmux
+RUN zypper -n install curl wget vim git openssh htop tmux
 
 WORKDIR /usr/bin
 
@@ -16,4 +16,4 @@ RUN chmod +x ./ttyd
 
 WORKDIR /
 
-CMD ["ttyd", "fish"]
+CMD ["ttyd", "bash"]

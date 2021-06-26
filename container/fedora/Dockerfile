@@ -6,7 +6,7 @@ RUN yum update -y
 
 RUN yum upgrade -y
 
-RUN yum install fish curl wget vim git tmux -y
+RUN yum install curl wget vim git tmux -y
 
 WORKDIR /usr/bin
 
@@ -18,4 +18,4 @@ RUN chmod +x ./ttyd
 
 WORKDIR /
 
-CMD ["ttyd", "fish"]
+CMD ["ttyd", "bash"]

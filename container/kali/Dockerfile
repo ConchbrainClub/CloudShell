@@ -6,7 +6,7 @@ RUN apt update
 
 RUN apt upgrade -y
 
-RUN apt install fish curl wget vim git openssh-client htop tmux -y
+RUN apt install curl wget vim git openssh-client htop tmux -y
 
 WORKDIR /usr/bin
 
@@ -18,4 +18,4 @@ RUN chmod +x ./ttyd
 
 WORKDIR /
 
-CMD ["ttyd", "fish"]
+CMD ["ttyd", "bash"]
