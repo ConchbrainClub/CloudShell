@@ -1,7 +1,7 @@
 var http = require("http");
 var url = require("url");
 var fs = require("fs");
-var rotate = require("./rotate");
+var router = require("./router");
 
 http.createServer((req,res)=>{
 
@@ -14,11 +14,11 @@ http.createServer((req,res)=>{
             fs.createReadStream(staticFile).pipe(res);
         }
         else{
-            rotate(req,res,path);
+            router(req,res,path);
         }
     }
     else{
-        rotate(req,res,path);
+        router(req,res,path);
     }
 
 }).listen(8080,()=>{
