@@ -5,7 +5,7 @@ var router = require("./router");
 
 http.createServer((req,res)=>{
 
-    var path = url.parse(req.url).pathname;
+    var path = new URL(req.url, "http://localhost").pathname;
 
     var staticFile = __dirname + "/wwwroot" + path;
 
