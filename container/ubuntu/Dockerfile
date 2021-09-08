@@ -20,7 +20,7 @@ RUN wget https://starship.rs/install.sh && bash ./install.sh -y && rm ./install.
 RUN echo 'eval "$(starship init bash)"' >> ~/.bashrc
 
 # install dev env
-RUN apt install nodejs npm python3 python3-pip php golang openjdk-14-jdk mysql-server -y
+RUN apt install nodejs npm python3 python3-pip php golang openjdk-16-jdk mysql-server -y
 
 # config python
 RUN ln -s /bin/python3 /bin/python
