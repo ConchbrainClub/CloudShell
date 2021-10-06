@@ -16,6 +16,15 @@
 .system{
     cursor: pointer;
     margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.card-img {
+    transition: transform 0.2s ease-out;
+}
+
+.system:hover .card-img {
+    transform: scale(1.07);
 }
 
 #shell iframe{
