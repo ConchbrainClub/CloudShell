@@ -13,6 +13,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    if: github.repository == 'ConchbrainClub/CloudShell'
 
     steps:
     - uses: actions/checkout@v2
@@ -36,6 +37,7 @@ jobs:
   container-dockerhub:
     needs: build
     runs-on: ubuntu-latest
+    if: github.repository == 'ConchbrainClub/CloudShell'
 
     steps:
     - uses: actions/checkout@v2
@@ -68,6 +70,7 @@ jobs:
   container-aliyun:
     needs: build
     runs-on: ubuntu-latest
+    if: github.repository == 'ConchbrainClub/CloudShell'
 
     steps:
     - uses: actions/checkout@v2
