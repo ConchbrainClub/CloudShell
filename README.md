@@ -73,7 +73,7 @@ docker-compose up
 
 ![](https://corehome.oss-accelerate.aliyuncs.com/blogs/screencapture-180-76-232-34-1599031047847.png)
 
-#### 直接在服务器部署
+## 直接在服务器部署
 
 容器镜像已经上传至 Aliyun ，可以直接拉取并运行
 
