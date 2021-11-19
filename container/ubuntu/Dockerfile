@@ -26,19 +26,14 @@ RUN apt install nodejs npm python3 python3-pip php golang openjdk-16-jdk mysql-s
 RUN ln -s /bin/python3 /bin/python
 
 #install dotnet
-RUN wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 
-RUN dpkg -i packages-microsoft-prod.deb
+RUN wget https://packages.microsoft.com/config/ubuntu/21.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 
-RUN apt update
+RUN dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
 
-RUN apt install apt-transport-https -y
+RUN apt update && apt install apt-transport-https -y
 
-RUN apt update
-
-RUN apt install dotnet-sdk-5.0 -y
-
-RUN rm packages-microsoft-prod.deb
+RUN apt update && apt install dotnet-sdk-6.0 -y
 
 WORKDIR /usr/bin
 
