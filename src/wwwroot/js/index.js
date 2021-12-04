@@ -45,7 +45,7 @@ function tryConnect(){
             $("#shell").modal("toggle");
         }
         else if(str == num){
-            let url = "/" + container.id;
+            let url = `/${container.id}/`;
             document.querySelector("#shell").querySelector("iframe").src = url;
         }
         else{
