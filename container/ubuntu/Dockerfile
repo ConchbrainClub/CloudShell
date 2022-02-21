@@ -15,7 +15,7 @@ RUN curl -sLf https://spacevim.org/cn/install.sh | bash
 RUN cd ~/.SpaceVim/bundle/vimproc.vim && make
 
 #install starship
-RUN wget https://starship.rs/install.sh && bash ./install.sh -y && rm ./install.sh
+RUN wget https://starship.rs/install.sh && /bin/sh ./install.sh -y && rm ./install.sh
 
 RUN echo 'eval "$(starship init bash)"' >> ~/.bashrc
 
