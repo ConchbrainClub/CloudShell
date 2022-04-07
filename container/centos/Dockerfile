@@ -2,7 +2,7 @@ FROM centos
 
 EXPOSE 7681
 
-RUN dnf upgrade -y
+RUN dnf update && dnf upgrade -y
 
 RUN dnf install curl wget vim git openssh mc tmux gcc make -y
 
