@@ -6,3 +6,4 @@ docker build -t lixinyang/cloudshell:archlinux ./archlinux
 docker build -t lixinyang/cloudshell:kali ./kali
 docker build -t lixinyang/cloudshell:fedora ./fedora
 docker build -t lixinyang/cloudshell:opensuse ./opensuse
+docker build -t lixinyang/cloudshell:rockylinux ./rockylinux

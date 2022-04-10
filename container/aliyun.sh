@@ -1,4 +1,4 @@
-images=(latest ubuntu centos debian alpine archlinux kali fedora opensuse)
+images=(latest ubuntu centos debian alpine archlinux kali fedora opensuse rockylinux)
 
 for item in ${images[@]};
 do
