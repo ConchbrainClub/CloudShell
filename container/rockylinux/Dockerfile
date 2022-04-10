@@ -2,17 +2,17 @@ FROM rockylinux
 
 EXPOSE 7681
 
-RUN dnf update -y && dnf upgrade -y
+RUN dnf update -y
 
 RUN dnf install curl wget vim git openssh mc tmux gcc make -y
 
 # install spacevim
-RUN curl -sLf https://spacevim.org/cn/install.sh | bash
+RUN curl -sLf https://spacevim.org/cn/install.sh | sh
 
 RUN cd ~/.SpaceVim/bundle/vimproc.vim && make 
 
 #install starship
-RUN wget https://starship.rs/install.sh && bash ./install.sh -y && rm ./install.sh
+RUN wget https://starship.rs/install.sh && sh ./install.sh -y && rm ./install.sh
 
 RUN echo 'eval "$(starship init bash)"' >> ~/.bashrc
 
