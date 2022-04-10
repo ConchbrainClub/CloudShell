@@ -2,7 +2,7 @@ FROM rockylinux
 
 EXPOSE 7681
 
-RUN dnf update && dnf upgrade -y
+RUN dnf update -y && dnf upgrade -y
 
 RUN dnf install curl wget vim git openssh mc tmux gcc make -y
 
