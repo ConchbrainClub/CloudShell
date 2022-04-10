@@ -52,6 +52,7 @@ jobs:
         docker build -t lixinyang/cloudshell:kali ./kali
         docker build -t lixinyang/cloudshell:fedora ./fedora
         docker build -t lixinyang/cloudshell:opensuse ./opensuse
+        docker build -t lixinyang/cloudshell:rockylinux ./rockylinux
         cd ..
 
     - name: Push image to DockerHub
@@ -65,6 +66,7 @@ jobs:
         docker push lixinyang/cloudshell:kali
         docker push lixinyang/cloudshell:fedora
         docker push lixinyang/cloudshell:opensuse
+        docker push lixinyang/cloudshell:rockylinux
         docker logout
 
   container-aliyun:
@@ -85,6 +87,7 @@ jobs:
         docker build -t registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:kali ./kali
         docker build -t registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:fedora ./fedora
         docker build -t registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:opensuse ./opensuse
+        docker build -t registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:rockylinux ./rockylinux
         cd ..
 
     - name: Push image to Aliyun
@@ -98,4 +101,5 @@ jobs:
         docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:kali
         docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:fedora
         docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:opensuse
+        docker push registry.cn-shenzhen.aliyuncs.com/lllxy/cloudshell:rockylinux
         docker logout
