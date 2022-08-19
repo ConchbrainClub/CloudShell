@@ -1,4 +1,4 @@
-FROM rockylinux
+FROM rockylinux:9.0
 
 EXPOSE 7681
 
