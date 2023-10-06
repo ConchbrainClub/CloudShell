@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "conchbrainclub cloud shell",
   "main": "./src/main.js",
-  "dependencies": {},
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  },
   "devDependencies": {},
   "scripts": {
     "restore": "npm install",

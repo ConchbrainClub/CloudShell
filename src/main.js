@@ -1,26 +1,47 @@
-var http = require("http");
-var url = require("url");
-var fs = require("fs");
-var router = require("./router");
+import { App } from './core/app.js'
+import { StaticFile } from './middlewares/staticfile.js'
+import { Cors } from './middlewares/cors.js'
+import { config } from 'dotenv'
+import ttyd from './ttyd.js'
 
-http.createServer((req,res)=>{
+config()
+const app = new App()
 
-    var path = new URL(req.url, "http://localhost").pathname;
+// Compute the api response time
 
-    var staticFile = __dirname + "/wwwroot" + path;
+app.use((req, res, next) => {
+    console.time()
+    next(req, res)
+    console.timeEnd()
+})
 
-    if(fs.existsSync(staticFile)){
-        if(fs.lstatSync(staticFile).isFile()){
-            fs.createReadStream(staticFile).pipe(res);
+// Map Static file
+app.use(new StaticFile('/wwwroot'))
+app.use(new Cors())
+
+// Redirect to index.html
+
+app.map('/', (req, res) => {
+    res.redirect('/index.html')
+})
+
+// Create a docker container
+// -----------------------------------
+// query
+//    - image      image name
+
+app.map('/create', async (req, res) => {
+    var image = new URL(req.url, "http://localhost").search.replace("?","")
+
+    ttyd.create(image, (id)=>{
+        if(id){
+            res.end(id)
         }
         else{
-            router(req,res,path);
+            res.statusCode = 500
+            res.end("error")
         }
-    }
-    else{
-        router(req,res,path);
-    }
+    })
+})
 
-}).listen(8080,()=>{
-    console.log("server run at http://localhost");
-});
+app.build().start(process.env.PORT)
