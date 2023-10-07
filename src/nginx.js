@@ -1,6 +1,6 @@
-var fs = require("fs");
-var child_process = require("child_process");
-var common = require("./common");
+import fs from 'fs'
+import child_process from 'child_process'
+import common from './common.js';
 
 var config,location;
 var configPath = "/etc/nginx/sites-enabled/default";

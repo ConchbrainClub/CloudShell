@@ -1,22 +1,12 @@
-var child_process = require("child_process");
-var fs = require("fs");
-nginx = require("./nginx");
-var common = require("./common");
+import child_process from 'child_process'
+import fs from 'fs'
+
+import nginx from './nginx.js'
+import common from './common.js';
+import { Container } from './models/container.js'
+import { Forward } from './models/forward.js'
 
 var nginx,config,containers,forwardList,usefulPorts;
-
-function container (id,containerId,port,endTime){
-    this.id = id;
-    this.containerId = containerId;
-    this.port = port;
-    this.endTime = endTime;
-    this.forward = [];
-}
-
-function forward(id, port) {
-    this.id = id;
-    this.port = port;
-}
 
 function create(image,callback){
 
@@ -38,7 +28,7 @@ function create(image,callback){
 
             //存储容器
             stdout = stdout.replace("\n","");
-            containers.push(new container(id,stdout,port,new Date().getTime() + 1000 * 60 * config.delayedTime));
+            containers.push(new Container(id,stdout,port,new Date().getTime() + 1000 * 60 * config.delayedTime));
             //配置反向代理
             nginx.apply(nginx.generator(containers,forwardList),(flag)=>{
                 if(flag){
@@ -116,7 +106,7 @@ function autoRecycling(){
 
 
 function createForward(containerId, port) {
-    forwardList.push(new forward(containerId, port));
+    forwardList.push(new Forward(containerId, port));
     //配置反向代理
     nginx.apply(nginx.generator(containers,forwardList),(flag)=>{
         if(flag){
