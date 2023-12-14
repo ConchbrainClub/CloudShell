@@ -1,4 +1,8 @@
+import fs from 'fs'
 import http from 'http'
+import path from 'path'
+import { pathToFileURL } from 'url'
+import { Group } from './group.js'
 import { Middleware } from './middleware.js'
 import Response from './response.js'
 import Request from './request.js'
@@ -10,7 +14,7 @@ export class App {
         this.actions = []
 
         this.server = http.createServer((req, res) => {
-            console.log(`\n${req.method} ${req.url}`)
+            console.log(`\n${new Date()}\n${req.method} ${req.url}`)
 
             this.pipeline.invoke(
                 Request.object(req, this.host),
@@ -21,11 +25,13 @@ export class App {
     }
 
     #endpoint(req, res) {
-        let action = this.actions.find(i => new RegExp(`^${i.path}$`).test(req.pathname))
+        let action = this.actions
+            .filter(i => new RegExp(`^${i.path}$`).test(req.pathname))
+            .sort((a, b) => b.path.length - a.path.length)
+            .at(0)
 
         if (!action) {
-            res.statusCode = 404
-            res.end('Not found')
+            res.notfound()
             return
         }
 
@@ -34,8 +40,7 @@ export class App {
         }
         catch (err) {
             console.error(err)
-            res.statusCode = 500
-            res.end('Server Error')
+            res.error('Server Error')
         }
     }
 
@@ -49,12 +54,48 @@ export class App {
         return this
     }
 
-    map(path, callback) {
+    map(routePath, callback) {
+        routePath = routePath.replaceAll('\\', '/')
+
         this.actions.push({
-            path: path,
+            path: routePath,
             invoke: callback
         })
         return this
+    }
+
+    mapGroup(basePath, callback) {
+        if (!basePath.startsWith('/')) basePath = '/' + basePath
+        let group = new Group(basePath)
+        
+        callback(group)
+        group.routes.forEach(i => this.map(i.path, i.callback))
+    }
+
+    mapController(dir = 'controllers', basePath = '/') {
+
+        if (!basePath.startsWith('/')) basePath = '/' + basePath
+        let controllerDir = path.join(process.cwd(), 'src', dir)
+
+        fs.readdirSync(controllerDir).forEach(async controllerName => {
+            let controllerPath = path.join(controllerDir, controllerName)
+            if (fs.lstatSync(controllerPath).isDirectory()) return
+
+            let module = (await import(pathToFileURL(controllerPath).href)).default
+
+            Object.keys(module).forEach(actionName => {
+                let routePath = path.join(basePath, controllerName.replace('.js', ''), actionName, '/?')
+                this.map(routePath, module[actionName])
+            })
+
+            if (module['index']) {
+                this.map(path.join(basePath, controllerName.replace('.js', ''), '/?'), module['index'])
+            }
+
+            if (controllerName.replace('.js', '') == 'home' && module['index']) {
+                this.map(path.join(basePath, '/?'), module['index'])
+            }
+        })
     }
 
     build() {
