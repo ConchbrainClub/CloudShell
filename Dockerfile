@@ -4,9 +4,10 @@ EXPOSE 80
 WORKDIR /app
 
 RUN apt update && apt upgrade -y
-RUN apt install nodejs npm -y
+RUN apt install curl nginx -y
 
-RUN apt install nginx -y
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash
+RUN apt install nodejs -y
 
 RUN touch ./docker
 
@@ -16,4 +17,4 @@ COPY ["./package.json","./package.json"]
 
 RUN npm install
 
-ENTRYPOINT ["node", "./src/main.js"]
+ENTRYPOINT ["npm", "start"]

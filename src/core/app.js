@@ -6,15 +6,16 @@ import { Group } from './group.js'
 import { Middleware } from './middleware.js'
 import Response from './response.js'
 import Request from './request.js'
+import logger from './logger.js'
 
 export class App {
     constructor() {
         this.pipeline = undefined
         this.middlewares = []
         this.actions = []
-
+        this.logger = logger
         this.server = http.createServer((req, res) => {
-            console.log(`\n${new Date()}\n${req.method} ${req.url}`)
+            this.logger.info(`${new Date()}\n${req.method} ${req.url}`)
 
             this.pipeline.invoke(
                 Request.object(req, this.host),
@@ -39,7 +40,7 @@ export class App {
             action.invoke(req, res)
         }
         catch (err) {
-            console.error(err)
+            this.logger.error(err)
             res.error('Server Error')
         }
     }
@@ -52,6 +53,10 @@ export class App {
             this.middlewares.push(new Middleware(callback))
         }
         return this
+    }
+    
+    useLogger(logger) {
+        this.logger = logger
     }
 
     map(routePath, callback) {
@@ -120,7 +125,7 @@ export class App {
         this.host = `http://localhost:${port}`
 
         this.server.listen(port, () => {
-            console.log(`server run at ${this.host}`)
+            this.logger.info(`server run at ${this.host}`)
         })
     }
 }
