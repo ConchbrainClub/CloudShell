@@ -104,13 +104,15 @@ export class TTYD {
 
     //延长容器生命周期
     delayedLife(id, callback) {
-        this.containers.forEach(container => {
-            if (container.id == id) {
-                container.endTime = new Date().getTime() + 1000 * 60 * this.config.delayedTime
-                callback(true)
-            }
-        })
-        callback(false)
+        let container = this.containers.find(i => i.id == id)
+
+        if(!container) {
+            callback(false)
+            return
+        }
+        
+        container.endTime = new Date().getTime() + 1000 * 60 * this.config.delayedTime
+        callback(true)
     }
 
     //自动回收过期容器

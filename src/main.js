@@ -31,67 +31,63 @@ app.map('/', (req, res) => {
 // query
 //    - image      image name
 
-app.map('/create', async (req, res) => {
+app.map('/create', (req, res) => {
     var image = req.query.id
 
     ttyd.create(image, id => {
-        if(id){
+        if (id) {
             res.end(id)
         }
-        else{
-            res.statusCode = 500
-            res.end("error")
+        else {
+            res.error()
         }
     })
 })
 
-app.map('/kill', async (req, res) => {
+app.map('/kill', (req, res) => {
     var containerId = req.query.id
-    
-    ttyd.kill(containerId,(flag)=>{
-        if(flag){
-            res.end("kill container "+containerId);
+
+    ttyd.kill(containerId, (flag) => {
+        if (flag) {
+            res.end('kill container ' + containerId)
         }
-        else{
-            res.statusCode = 500;
-            res.end("kill container defeat");
+        else {
+            res.error('kill container defeat')
         }
     })
 })
 
-app.map('/delay', async (req, res) => {
+app.map('/delay', (req, res) => {
     var containerId = req.query.id
 
     ttyd.delayedLife(containerId, flag => {
-        if(flag){
-            res.end("delay successful");
+        if (flag) {
+            res.end('delay successful')
         }
-        else{
-            res.statusCode = 500;
-            res.end("dealy defeat");
+        else {
+            res.error('dealy defeat')
         }
-    });
+    })
 })
 
-app.map('/forward', async (req, res) => {
+app.map('/forward', (req, res) => {
     let id = req.query.id
     let port = req.query.port
 
-    if(!id || !port){
-        res.statusCode = 500;
-        res.end("incomplete parameters");
+    if (!id || !port) {
+        res.statusCode = 500
+        res.end('incomplete parameters')
     }
 
     ttyd.containers.forEach((container) => {
-        if(container.id == id){
-            ttyd.createForward(id,port);
-            res.end("createForward successful");
+        if (container.id == id) {
+            ttyd.createForward(id, port)
+            res.end('createForward successful')
         }
-        else{
-            res.statusCode = 500;
-            res.end("container is not exist");
+        else {
+            res.error('container is not exist')
         }
-    });
+    })
 })
 
 app.build().start(process.env.PORT)

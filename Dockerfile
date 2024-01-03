@@ -2,6 +2,7 @@ FROM ubuntu
 
 EXPOSE 80
 WORKDIR /app
+ENV IN_DOCKER=true
 
 RUN apt update && apt upgrade -y
 RUN apt install curl nginx -y

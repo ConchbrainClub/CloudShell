@@ -1,5 +1,3 @@
-import fs from 'fs'
-
 export default {
     guid() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c) {
@@ -9,6 +7,6 @@ export default {
     },
 
     inDocker(){
-        return fs.existsSync("./docker")
+        return process.env.IN_DOCKER
     }
 }
