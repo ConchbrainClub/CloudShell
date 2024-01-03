@@ -2,11 +2,15 @@
 
 CloudShell is an out-of-the-box online Linux environment that supports nine commonly used Linux distributions.  It comes with basic tools such as curl, ssh, spacevim, starship, git, tmux, and integrates development environments such as Nodejs, Python, .NET, OpenJDK, PHP, and Go.
 
-## Build from source code
-
 ![CloudShell](https://github.com/ConchBrainClub/CloudShell/workflows/CloudShell/badge.svg)
 
-[![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=conchbrainclub&repo=cloudshell)](https://github.com/conchbrainclub/cloudshell)
+<div style="display:flex; width: 100%;">
+    <img src="https://corehome.oss-accelerate.aliyuncs.com/blogs/screencapture-180-76-232-34-1599031047847.png" />
+    <img style="width: 46%;" src="https://github.com/ConchbrainClub/CloudShell/assets/32838371/c4cb43c5-1706-4a79-a7aa-e30cdae9dd87" />
+    <img style="width: 53%; height: 100%;" src="https://github.com/ConchbrainClub/CloudShell/assets/32838371/8b3d8ce1-7add-472a-9088-f49cebd6b4d8" />
+</div>
+
+## Build from source code
 
 #### Environment
 
@@ -69,8 +73,6 @@ docker-compose up
 ```
 
 visit  http://localhost/
-
-![](https://corehome.oss-accelerate.aliyuncs.com/blogs/screencapture-180-76-232-34-1599031047847.png)
 
 ## Deploy on server
 
