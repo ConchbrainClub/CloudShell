@@ -1,26 +1,93 @@
-var http = require("http");
-var url = require("url");
-var fs = require("fs");
-var router = require("./router");
+import { App } from './core/app.js'
+import { StaticFile } from './middlewares/staticfile.js'
+import { Cors } from './middlewares/cors.js'
+import { config } from 'dotenv'
+import { TTYD } from './services/ttyd.js'
 
-http.createServer((req,res)=>{
+config()
+const app = new App()
+const ttyd = new TTYD()
 
-    var path = new URL(req.url, "http://localhost").pathname;
+// Compute the api response time
 
-    var staticFile = __dirname + "/wwwroot" + path;
+app.use((req, res, next) => {
+    console.time()
+    next(req, res)
+    console.timeEnd()
+})
 
-    if(fs.existsSync(staticFile)){
-        if(fs.lstatSync(staticFile).isFile()){
-            fs.createReadStream(staticFile).pipe(res);
+// Map Static file
+app.use(new StaticFile('/wwwroot'))
+app.use(new Cors())
+
+// Redirect to index.html
+
+app.map('/', (req, res) => {
+    res.redirect('/index.html')
+})
+
+// Create a docker container
+// -----------------------------------
+// query
+//    - image      image name
+
+app.map('/create', (req, res) => {
+    var image = req.query.id
+
+    ttyd.create(image, id => {
+        if (id) {
+            res.end(id)
         }
-        else{
-            router(req,res,path);
+        else {
+            res.error()
         }
-    }
-    else{
-        router(req,res,path);
+    })
+})
+
+app.map('/kill', (req, res) => {
+    var containerId = req.query.id
+
+    ttyd.kill(containerId, (flag) => {
+        if (flag) {
+            res.end('kill container ' + containerId)
+        }
+        else {
+            res.error('kill container defeat')
+        }
+    })
+})
+
+app.map('/delay', (req, res) => {
+    var containerId = req.query.id
+
+    ttyd.delayedLife(containerId, flag => {
+        if (flag) {
+            res.end('delay successful')
+        }
+        else {
+            res.error('dealy defeat')
+        }
+    })
+})
+
+app.map('/forward', (req, res) => {
+    let id = req.query.id
+    let port = req.query.port
+
+    if (!id || !port) {
+        res.statusCode = 500
+        res.end('incomplete parameters')
     }
 
-}).listen(8080,()=>{
-    console.log("server run at http://localhost");
-});
+    ttyd.containers.forEach((container) => {
+        if (container.id == id) {
+            ttyd.createForward(id, port)
+            res.end('createForward successful')
+        }
+        else {
+            res.error('container is not exist')
+        }
+    })
+})
+
+app.build().start(process.env.PORT)
