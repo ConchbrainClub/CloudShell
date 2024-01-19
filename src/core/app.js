@@ -36,13 +36,10 @@ export class App {
             return
         }
 
-        try {
-            action.invoke(req, res)
-        }
-        catch (err) {
+        action.invoke(req, res).catch(err => {
             this.logger.error(err)
             res.error('Server Error')
-        }
+        })
     }
 
     use(callback) {
@@ -54,7 +51,7 @@ export class App {
         }
         return this
     }
-    
+
     useLogger(logger) {
         this.logger = logger
     }
@@ -62,10 +59,32 @@ export class App {
     map(routePath, callback) {
         routePath = routePath.replaceAll('\\', '/')
 
-        this.actions.push({
-            path: routePath,
-            invoke: callback
-        })
+        switch (Object.prototype.toString.call(callback)) {
+
+            case '[object AsyncFunction]':
+                this.actions.push({
+                    path: routePath,
+                    invoke: callback
+                })
+                break
+
+            case '[object Function]':
+                this.actions.push({
+                    path: routePath,
+                    invoke: (req, res) => new Promise((resolve, reject) => {
+                        try {
+                            callback(req, res)
+                            resolve()
+                        } 
+                        catch (err) { reject(err) }
+                    })
+                })
+                break
+
+            default:
+                throw 'need [ Function / AsyncFunction ]'
+        }
+
         return this
     }
 

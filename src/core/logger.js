@@ -1,4 +1,3 @@
-
 export default {
     info(msg) {
         console.log(msg)
