@@ -5,7 +5,7 @@
   "main": "./src/main.js",
   "type": "module",
   "dependencies": {
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.3.2",
     "pejs": "^0.6.5"
   },
   "devDependencies": {},
