@@ -11,6 +11,7 @@ services:
             dockerfile: Dockerfile
         restart: always
         volumes:
+            - .:/app
             - /usr/bin/docker:/usr/bin/docker
             - /var/run/docker.sock:/var/run/docker.sock
         user: root

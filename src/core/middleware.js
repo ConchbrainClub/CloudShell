@@ -4,9 +4,9 @@ export class Middleware {
         this.next = undefined
     }
 
-    invoke(req, res, middleware) {
-        middleware.handler(req, res, (req, res) =>
-            this.invoke(req, res, middleware.next)
+    async invoke(req, res, middleware) {
+        await middleware.handler(req, res, async (req, res) =>
+            await this.invoke(req, res, middleware.next)
         )
     }
 }

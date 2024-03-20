@@ -6,13 +6,13 @@ import { Middleware } from "../core/middleware.js";
 export class StaticFile extends Middleware {
 
     constructor(wwwroot) {
-        let func = (req, res, next) => {
+        let func = async (req, res, next) => {
 
             let pathname = new URL(req.url, 'http://localhost').pathname
             let fileName = path.join(process.cwd(), 'src', wwwroot, pathname)
 
             if (!fs.existsSync(fileName) || !fs.lstatSync(fileName).isFile()) {
-                next(req, res)
+                await next(req, res)
                 return
             }
 

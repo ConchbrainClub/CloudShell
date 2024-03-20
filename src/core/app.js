@@ -1,6 +1,7 @@
 import fs from 'fs'
 import http from 'http'
 import path from 'path'
+import moment from 'moment'
 import { pathToFileURL } from 'url'
 import { Group } from './group.js'
 import { Middleware } from './middleware.js'
@@ -14,18 +15,22 @@ export class App {
         this.middlewares = []
         this.actions = []
         this.logger = logger
-        this.server = http.createServer((req, res) => {
-            this.logger.info(`${new Date()}\n${req.method} ${req.url}`)
 
-            this.pipeline.invoke(
+        this.server = http.createServer(async (req, res) => {
+            this.logger.info(`${new Date()}\n${req.method} ${req.url}`)
+            let start = moment()
+
+            await this.pipeline.invoke(
                 Request.object(req, this.host),
                 Response.object(res),
                 this.pipeline
             )
+
+            this.logger.info(moment().diff(start) + "ms\n")
         })
     }
 
-    #endpoint(req, res) {
+    async #endpoint(req, res) {
         let action = this.actions
             .filter(i => new RegExp(`^${i.path}$`).test(req.pathname))
             .sort((a, b) => b.path.length - a.path.length)
@@ -36,7 +41,7 @@ export class App {
             return
         }
 
-        action.invoke(req, res).catch(err => {
+        await action.invoke(req, res).catch(err => {
             this.logger.error(err)
             res.error('Server Error')
         })
@@ -75,7 +80,7 @@ export class App {
                         try {
                             callback(req, res)
                             resolve()
-                        } 
+                        }
                         catch (err) { reject(err) }
                     })
                 })
@@ -123,15 +128,14 @@ export class App {
     }
 
     build() {
-
         this.middlewares.forEach((middleware, index) => {
             if (index >= this.middlewares.length - 1) return
             middleware.next = this.middlewares[index + 1]
         })
 
         this.middlewares[this.middlewares.length - 1].next = {
-            handler: (req, res, _) => {
-                this.#endpoint(req, res)
+            handler: async (req, res, _) => {
+                await this.#endpoint(req, res)
             }
         }
 

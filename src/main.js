@@ -8,14 +8,6 @@ config()
 const app = new App()
 const ttyd = new TTYD()
 
-// Compute the api response time
-
-app.use((req, res, next) => {
-    console.time()
-    next(req, res)
-    console.timeEnd()
-})
-
 // Map Static file
 app.use(new StaticFile('/wwwroot'))
 app.use(new Cors())
