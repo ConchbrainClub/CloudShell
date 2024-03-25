@@ -1,7 +1,6 @@
 import fs from 'fs'
 import http from 'http'
 import path from 'path'
-import moment from 'moment'
 import { pathToFileURL } from 'url'
 import { Group } from './group.js'
 import { Middleware } from './middleware.js'
@@ -17,8 +16,8 @@ export class App {
         this.logger = logger
 
         this.server = http.createServer(async (req, res) => {
-            this.logger.info(`${new Date()}\n${req.method} ${req.url}`)
-            let start = moment()
+            let date = new Date()
+            this.logger.info(`${date}\n${req.method} ${req.url}`)
 
             await this.pipeline.invoke(
                 Request.object(req, this.host),
@@ -26,7 +25,7 @@ export class App {
                 this.pipeline
             )
 
-            this.logger.info(moment().diff(start) + "ms\n")
+            this.logger.info((new Date().getTime() - date.getTime()) + "ms\n")
         })
     }
 

@@ -1,7 +1,7 @@
-import pejs from 'pejs'
 import path from 'path'
+import ejs from './ejs/index.js'
 
-var views = pejs();
+var views = ejs();
 
 export default class Response {
 
