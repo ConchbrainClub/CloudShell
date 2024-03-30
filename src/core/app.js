@@ -98,11 +98,12 @@ export class App {
         
         callback(group)
         group.routes.forEach(i => this.map(i.path, i.callback))
+        return this
     }
 
     mapController(dir = 'controllers', basePath = '/') {
 
-        if (!basePath.startsWith('/')) basePath = '/' + basePath
+        if (!basePath.startsWith('/')) basePath = `/${basePath}`
         let controllerDir = path.join(process.cwd(), 'src', dir)
 
         fs.readdirSync(controllerDir).forEach(async controllerName => {
@@ -124,6 +125,8 @@ export class App {
                 this.map(path.join(basePath, '/?'), module['index'])
             }
         })
+
+        return this
     }
 
     build() {
@@ -132,12 +135,17 @@ export class App {
             middleware.next = this.middlewares[index + 1]
         })
 
-        this.middlewares[this.middlewares.length - 1].next = {
-            handler: async (req, res, _) => {
-                await this.#endpoint(req, res)
-            }
+        let middleware = new Middleware(async (req, res, _) => {
+            await this.#endpoint(req, res)
+        })
+
+        let last = this.middlewares.slice(-1).at(0)
+        if (!last) {
+            this.pipeline = middleware
+            return this
         }
 
+        last.next = middleware
         this.pipeline = this.middlewares[0]
         return this
     }

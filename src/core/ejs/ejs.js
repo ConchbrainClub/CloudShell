@@ -6,15 +6,13 @@ import codegen from './codegen.js'
 import watch from './watch.js'
 import sequence from './sequence.js'
 
-var noop = function () { }
-
 var requireSource = function (source) {
 	var module = { exports: {} }
 	vm.runInNewContext(source, { console: console, module: module })
 	return module.exports
 }
 
-export default function pejs(opts) {
+export default function ejs(opts) {
 	if (!opts) opts = {}
 
 	opts.basedir = opts.basedir || process.cwd()
@@ -174,4 +172,4 @@ export default function pejs(opts) {
 	return templates
 }
 
-pejs.__express = pejs().render
+ejs.__express = ejs().render

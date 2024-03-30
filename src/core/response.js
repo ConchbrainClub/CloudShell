@@ -1,5 +1,5 @@
 import path from 'path'
-import ejs from './ejs/index.js'
+import ejs from './ejs/ejs.js'
 
 var views = ejs();
 
