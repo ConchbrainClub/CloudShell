@@ -1,4 +1,4 @@
-import { Middleware } from '../core/middleware.js';
+import { Middleware } from '../middleware.js';
 
 export class Cors extends Middleware {
 

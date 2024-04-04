@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import process from 'process';
-import { Middleware } from "../core/middleware.js";
+import { Middleware } from "../middleware.js";
 
 export class StaticFile extends Middleware {
 

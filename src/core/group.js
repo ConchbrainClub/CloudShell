@@ -2,6 +2,7 @@ import path from 'path'
 
 export class Group {
     constructor(basePath) {
+        if (!basePath.startsWith('/')) basePath = '/' + basePath
         this.basePath = basePath
         this.routes = []
     }

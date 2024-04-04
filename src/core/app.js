@@ -1,23 +1,29 @@
 import fs from 'fs'
 import http from 'http'
 import path from 'path'
+
+import Response from './response.js'
+import Request from './request.js'
 import { pathToFileURL } from 'url'
 import { Group } from './group.js'
 import { Middleware } from './middleware.js'
-import Response from './response.js'
-import Request from './request.js'
-import logger from './logger.js'
+import { Logger } from './logger.js'
+
+// default middlewares
+import { Cors } from './middleware/cors.js'
+import { StaticFile } from './middleware/staticfile.js'
+import { PathBase } from './middleware/pathbase.js'
 
 export class App {
     constructor() {
         this.pipeline = undefined
         this.middlewares = []
         this.actions = []
-        this.logger = logger
+        this.logger = new Logger()
+        this.hasBuilt = false
 
         this.server = http.createServer(async (req, res) => {
             let date = new Date()
-            this.logger.info(`${date}\n${req.method} ${req.url}`)
 
             await this.pipeline.invoke(
                 Request.object(req, this.host),
@@ -25,7 +31,8 @@ export class App {
                 this.pipeline
             )
 
-            this.logger.info((new Date().getTime() - date.getTime()) + "ms\n")
+            let times = `${new Date().getTime() - date.getTime()}ms`
+            this.logger.log(`${date}\n\r${req.method} ${req.url}\n\r${times}`)
         })
     }
 
@@ -41,7 +48,7 @@ export class App {
         }
 
         await action.invoke(req, res).catch(err => {
-            this.logger.error(err)
+            this.logger.log(err, 'error')
             res.error('Server Error')
         })
     }
@@ -58,6 +65,19 @@ export class App {
 
     useLogger(logger) {
         this.logger = logger
+        return this
+    }
+
+    useCors() {
+        return this.use(new Cors())
+    }
+
+    usePathBase(basePath) {
+        return this.use(new PathBase(basePath))
+    }
+
+    useStaticFile(wwwroot = 'wwwroot', requestPath = '/') {
+        return this.use(new StaticFile(wwwroot, requestPath))
     }
 
     map(routePath, callback) {
@@ -93,9 +113,7 @@ export class App {
     }
 
     mapGroup(basePath, callback) {
-        if (!basePath.startsWith('/')) basePath = '/' + basePath
         let group = new Group(basePath)
-        
         callback(group)
         group.routes.forEach(i => this.map(i.path, i.callback))
         return this
@@ -130,6 +148,8 @@ export class App {
     }
 
     build() {
+        if (this.hasBuilt) throw 'app has been built'
+
         this.middlewares.forEach((middleware, index) => {
             if (index >= this.middlewares.length - 1) return
             middleware.next = this.middlewares[index + 1]
@@ -140,13 +160,16 @@ export class App {
         })
 
         let last = this.middlewares.slice(-1).at(0)
+
         if (!last) {
             this.pipeline = middleware
-            return this
+        }
+        else {
+            last.next = middleware
+            this.pipeline = this.middlewares[0]
         }
 
-        last.next = middleware
-        this.pipeline = this.middlewares[0]
+        this.hasBuilt = true
         return this
     }
 
@@ -155,7 +178,26 @@ export class App {
         this.host = `http://localhost:${port}`
 
         this.server.listen(port, () => {
-            this.logger.info(`server run at ${this.host}`)
+            this.logger.log(`server run at ${this.host}`)
+        })
+    }
+
+    dispose() {
+        this.logger.log(`dispose server...`)
+
+        return new Promise((resolve, reject) => {
+            this.server.close((err) => {
+                if (err) reject(err)
+
+                this.pipeline = undefined
+                this.middlewares = []
+                this.actions = []
+                this.logger = new Logger()
+                this.hasBuilt = false
+                this.server = undefined
+                this.logger.log(`server has been disposed`)
+                resolve()
+            })
         })
     }
 }

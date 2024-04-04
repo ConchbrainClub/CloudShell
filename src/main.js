@@ -1,6 +1,4 @@
 import { App } from './core/app.js'
-import { StaticFile } from './middlewares/staticfile.js'
-import { Cors } from './middlewares/cors.js'
 import { config } from 'dotenv'
 import { TTYD } from './services/ttyd.js'
 
@@ -9,8 +7,8 @@ const app = new App()
 const ttyd = new TTYD()
 
 // Map Static file
-app.use(new StaticFile('/wwwroot'))
-app.use(new Cors())
+app.useStaticFile()
+app.useCors()
 
 // Redirect to index.html
 
