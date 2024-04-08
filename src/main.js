@@ -1,9 +1,9 @@
-import { App } from './core/app.js'
+import plankton from './Plankton/index.js'
 import { config } from 'dotenv'
 import { TTYD } from './services/ttyd.js'
 
 config()
-const app = new App()
+const app = plankton()
 const ttyd = new TTYD()
 
 // Map Static file
