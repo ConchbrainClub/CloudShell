@@ -19,7 +19,7 @@ RUN echo 'eval "$(starship init bash)"' >> ~/.bashrc
 # install dev env
 RUN dnf install nodejs npm python3 python3-pip php golang default-jdk mysql-server -y
 
-RUN dnf install dotnet-sdk-6.0 -y
+RUN dnf install dotnet-sdk-8.0 -y
 
 WORKDIR /usr/bin
 

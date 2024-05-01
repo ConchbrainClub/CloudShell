@@ -33,7 +33,7 @@ RUN dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
 
 RUN apt update && apt install apt-transport-https -y
 
-RUN apt update && apt install dotnet-sdk-6.0 -y
+RUN apt update && apt install dotnet-sdk-8.0 -y
 
 WORKDIR /usr/bin
 
