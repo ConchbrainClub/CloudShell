@@ -13,7 +13,7 @@ jobs:
     if: github.repository == 'ConchbrainClub/CloudShell'
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag cloudshell:latest
