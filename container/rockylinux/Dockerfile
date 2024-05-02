@@ -1,4 +1,4 @@
-FROM rockylinux:9.0
+FROM rockylinux:9.3
 
 EXPOSE 7681
 
@@ -17,7 +17,7 @@ RUN wget https://starship.rs/install.sh && sh ./install.sh -y && rm ./install.sh
 RUN echo 'eval "$(starship init bash)"' >> ~/.bashrc
 
 # install dev env
-RUN dnf install nodejs npm python3 python3-pip php golang default-jdk mysql-server -y
+RUN dnf install nodejs npm python3 python3-pip php golang java-21-openjdk mysql-server -y
 
 RUN dnf install dotnet-sdk-8.0 -y
 
