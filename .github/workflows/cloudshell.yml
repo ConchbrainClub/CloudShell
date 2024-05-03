@@ -16,7 +16,9 @@ jobs:
     - uses: actions/checkout@v4
     
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag cloudshell:latest
+      run: |
+        git submodule update --init
+        docker build . --file Dockerfile --tag cloudshell:latest
     
     - name: Push image to DockerHub
       run: |
