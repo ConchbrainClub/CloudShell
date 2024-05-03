@@ -4,7 +4,7 @@ EXPOSE 7681
 
 RUN dnf update -y
 
-RUN dnf install curl wget vim git openssh mc tmux gcc make -y
+RUN dnf install wget vim git openssh mc tmux gcc make -y
 
 # install spacevim
 RUN curl -sLf https://spacevim.org/cn/install.sh | sh
