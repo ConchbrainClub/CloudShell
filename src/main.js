@@ -21,62 +21,78 @@ app.map('/', (req, res) => {
 // query
 //    - image      image name
 
-app.map('/create', (req, res) => {
-    var image = req.query.id
+app.map('/create', async (req, res) => {
+    await new Promise((resolve, reject) => {
+        let image = req.query.id
 
-    ttyd.create(image, id => {
-        if (id) {
-            res.end(id)
-        }
-        else {
-            res.error()
-        }
+        ttyd.create(image, id => {
+            if (id) {
+                res.end(id)
+                resolve()
+            }
+            else {
+                res.error()
+                reject()
+            }
+        })
     })
 })
 
-app.map('/kill', (req, res) => {
-    var containerId = req.query.id
+app.map('/kill', async (req, res) => {
+    await new Promise((resolve, reject) => {
+        let containerId = req.query.id
 
-    ttyd.kill(containerId, (flag) => {
-        if (flag) {
-            res.end('kill container ' + containerId)
-        }
-        else {
-            res.error('kill container defeat')
-        }
+        ttyd.kill(containerId, (flag) => {
+            if (flag) {
+                res.end('kill container ' + containerId)
+                resolve()
+            }
+            else {
+                res.error('kill container defeat')
+                reject()
+            }
+        })
     })
 })
 
-app.map('/delay', (req, res) => {
-    var containerId = req.query.id
+app.map('/delay', async (req, res) => {
+    await new Promise((resolve, reject) => {
+        let containerId = req.query.id
 
-    ttyd.delayedLife(containerId, flag => {
-        if (flag) {
-            res.end('delay successful')
-        }
-        else {
-            res.error('dealy defeat')
-        }
+        ttyd.delayedLife(containerId, flag => {
+            if (flag) {
+                res.end('delay successful')
+                resolve()
+            }
+            else {
+                res.error('dealy defeat')
+                reject()
+            }
+        })
     })
 })
 
-app.map('/forward', (req, res) => {
-    let id = req.query.id
-    let port = req.query.port
+app.map('/forward', async (req, res) => {
+    await new Promise(async (resolve, reject) => {
+        let id = req.query.id
+        let port = req.query.port
 
-    if (!id || !port) {
-        res.statusCode = 500
-        res.end('incomplete parameters')
-    }
+        if (!id || !port) {
+            res.statusCode = 500
+            res.end('incomplete parameters')
+        }
 
-    ttyd.containers.forEach((container) => {
-        if (container.id == id) {
-            ttyd.createForward(id, port)
-            res.end('createForward successful')
-        }
-        else {
-            res.error('container is not exist')
-        }
+        ttyd.containers.forEach((container) => {
+            if (container.id == id) {
+                ttyd.createForward(id, port)
+                res.end('createForward successful')
+                resolve()
+            }
+            else {
+                res.error('container is not exist')
+                reject()
+            }
+        })
     })
 })
 
