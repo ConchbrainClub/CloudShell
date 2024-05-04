@@ -3,7 +3,6 @@ name: cloudshell
 services:
 
     cloudshell:
-        image: lixinyang/cloudshell
         ports:
             - "3000:80"
         build:

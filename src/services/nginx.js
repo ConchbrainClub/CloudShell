@@ -53,7 +53,7 @@ export default {
 
         //重启nginx
         child_process.exec("nginx -s reload", (error, stdout, stderr) => {
-            if (error || stderr) {
+            if (error) {
                 //重启nginx失败，还原配置文件
                 fs.writeFileSync(configPath, config)
                 callback(false)
